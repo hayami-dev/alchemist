@@ -1,27 +1,32 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
-	"name": "Java",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:3-21-trixie",
-
-	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "false"
-		}
-	}
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "name": "Java 21 & MySQL Environment",
+  "image": "mcr.microsoft.com/devcontainers/java:21-bookworm",
+  // ここで拡張機能（プラグイン）をコンテナ内に自動インストール
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot-tools",
+        "vscjava.vscode-lombok"
+      ]
+    }
+  },
+  // Javaの隣でMySQLを同時に走らせる設定
+  "containerEnv": {
+    "DB_HOST": "127.0.0.1"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "none",
+      "installMaven": "true",
+      "installGradle": "false"
+    }
+  },
+  "forwardPorts": [
+    3306
+  ], // WindowsからMySQLに繋ぐためのポート
+  // コンテナ起動時に裏でMySQLを走らせる設定
+  "initializeCommand": "docker run -d --name alchemist-mysql-dev -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root_password -e MYSQL_DATABASE=alchemist_db -e MYSQL_USER=game_user -e MYSQL_PASSWORD=game_password mysql:8.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci || docker start alchemist-mysql-dev"
 }
