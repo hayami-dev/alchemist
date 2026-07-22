@@ -8,7 +8,6 @@ services:
     command: sleep infinity
     depends_on:
       - db
-    network_mode: service:db   # ← 後述。使わないなら削除してOK
 
   db:
     image: mysql:8.0
