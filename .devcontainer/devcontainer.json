@@ -10,7 +10,8 @@
         "vscjava.vscode-java-pack",
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-spring-boot-tools",
-        "vscjava.vscode-lombok"
+        "vscjava.vscode-lombok",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   },
