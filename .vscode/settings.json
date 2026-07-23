@@ -1,3 +1,19 @@
 {
-  "java.compile.nullAnalysis.mode": "automatic"
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "files.exclude": {
+    "**/target": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/target": true,
+    "**/node_modules": true
+  },
+  "java.jdt.ls.lombokSupport.enabled": true,
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "th:class=\"([^\"]*)\"",
+      "\"([^\"]*)\""
+    ]
+  ]
 }
