@@ -25,6 +25,8 @@ public class AlchemyController {
 
   private final AlchemyService alchemyService;
 
+  private static final String VIEW_PREFIX = "alchemy/";
+
   // 調合画面を表示する。
   // インベントリを表示してマテリアルアイテムを選択できるようにする。
   @GetMapping
@@ -34,7 +36,7 @@ public class AlchemyController {
       Model model) {
     String message = "hoge";
     model.addAttribute("message", message);
-    return "alchemy";
+    return VIEW_PREFIX + "alchemy";
   }
 
   // 調合完了画面を表示する。調合結果のアイテムを表示する。
