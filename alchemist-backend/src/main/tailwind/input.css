@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+button:hover {
+  cursor: pointer;
+}
+
+@theme {
+  --spacing-icon-sm: 40px;
+  --spacing-icon-md: 72px;
+  --spacing-icon-lg: 104px;
+}

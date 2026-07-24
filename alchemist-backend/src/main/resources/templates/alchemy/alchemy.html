@@ -13,17 +13,27 @@
 
   <body>
     <div layout:fragment="content">
-      <div
-        th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
-      ></div>
-      <div th:replace="~{fragments/alchemy/method-slot :: methodSlot(1)}"></div>
-      <div
-        th:replace="~{fragments/alchemy/material-slot :: materialSlot(2)}"
-      ></div>
-      <div th:replace="~{fragments/alchemy/method-slot :: methodSlot(2)}"></div>
-      <div
-        th:replace="~{fragments/alchemy/material-slot :: materialSlot(3)}"
-      ></div>
+      <section class="flex flex-col gap-4 items-center">
+        <h1 class="text-2xl font-bold">調合</h1>
+        <p>素材を2つ以上選んでください。</p>
+        <form class="flex gap-6 items-center p-6 justify-center">
+          <div
+            th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
+          ></div>
+          <div
+            th:replace="~{fragments/alchemy/method-slot :: methodSlot(1)}"
+          ></div>
+          <div
+            th:replace="~{fragments/alchemy/material-slot :: materialSlot(2)}"
+          ></div>
+          <div
+            th:replace="~{fragments/alchemy/method-slot :: methodSlot(2)}"
+          ></div>
+          <div
+            th:replace="~{fragments/alchemy/material-slot :: materialSlot(3)}"
+          ></div>
+        </form>
+      </section>
     </div>
   </body>
 </html>

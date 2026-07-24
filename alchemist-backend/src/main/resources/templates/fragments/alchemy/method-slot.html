@@ -6,6 +6,11 @@
     <title>Document</title>
   </head>
   <body>
-    <div th:fragment="methodSlot(num)">bbbb</div>
+    <button
+      th:fragment="methodSlot(num)"
+      class="size-icon-md border border-amber-950 bg-amber-100 text-amber-950 text-xs rounded-3xl flex items-center justify-center hover:opacity-80"
+    >
+      方法[[${num}]]
+    </button>
   </body>
 </html>
