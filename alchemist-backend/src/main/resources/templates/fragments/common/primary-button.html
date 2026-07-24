@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>メソッドスロット</title>
+    <title>プライマリーボタン</title>
   </head>
   <body>
     <button
-      th:fragment="methodSlot(num)"
-      class="size-icon-md border border-amber-950 bg-amber-100 text-amber-950 text-xs rounded-3xl flex items-center justify-center hover:opacity-80"
+      th:fragment="primaryButton(type,text)"
+      th:type="${type}"
+      class="bg-blue-600 text-white text-2xl py-2 px-4 rounded-full hover:opacity-80"
     >
-      方法[[${num}]]
+      [[${text}]]
     </button>
   </body>
 </html>
