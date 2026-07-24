@@ -1,7 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap");
+
 @import "tailwindcss";
 
-button:hover {
-  cursor: pointer;
+@layer base {
+  * {
+    font-family: "Kaisei Decol", sans-serif;
+    color: #3a3030;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
 }
 
 @theme {
