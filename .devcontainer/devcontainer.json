@@ -11,7 +11,8 @@
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-spring-boot-tools",
         "vscjava.vscode-lombok",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "redhat.java"
       ]
     }
   },
