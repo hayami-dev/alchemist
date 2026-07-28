@@ -3,7 +3,7 @@
   lang="ja"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/base}"
+  layout:decorate="~{layouts/base}"
 >
   <head>
     <meta charset="UTF-8" />
@@ -21,7 +21,7 @@
             <div
               th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
             ></div>
-            <div
+            <!-- <div
               th:replace="~{fragments/alchemy/method-slot :: methodSlot(1)}"
             ></div>
             <div
@@ -36,9 +36,11 @@
           </div>
           <button
             th:replace="~{fragments/common/primary-button :: primaryButton('submit','調合する')}"
-          ></button>
+          ></button> -->
         </form>
       </section>
+      <script type="module" th:src="@{/js/services/dialogService.js}"></script>
+      <script type="module" th:src="@{/js/alchemy.js}"></script>
     </div>
   </body>
 </html>

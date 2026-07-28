@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.app.domain.Item;
 import com.example.app.service.AlchemyService;
+import com.example.app.service.InventoryService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AlchemyController {
 
   private final AlchemyService alchemyService;
+  private final InventoryService inventoryService;
 
   private static final String VIEW_PREFIX = "alchemy/";
 
@@ -56,6 +58,15 @@ public class AlchemyController {
       Long recipeId) {
 
     return null;
+  }
+
+  // material-pickerを返すエンドポイント
+  // TODO:設計書に追記
+  @GetMapping("/material-picker")
+  public String materialPicer(Model model) {
+    // インベントリを取得
+    model.addAttribute("items", inventoryService.getMaterials());
+    return "fragments/alchemy/material-picker :: materialPicker";
   }
 
 }
