@@ -11,3 +11,11 @@ export const DialogService = {
     document.getElementById("dialogShell").classList.add("hidden");
   },
 };
+
+// このファイルが読み込まれた時点で、閉じるボタンにイベントを仕込んでおく
+document.addEventListener("DOMContentLoaded", () => {
+  const closeButton = document.getElementById("dialogCloseButton");
+  closeButton.addEventListener("click", () => {
+    DialogService.close();
+  });
+});
