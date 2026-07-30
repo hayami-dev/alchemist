@@ -5,10 +5,11 @@
 import { DialogService } from "./services/dialogService.js";
 
 // material-pickerの表示/非表示切替
-document.addEventListener("DOMContentLoaded", () => {
-  const openButton = document.getElementById("openMaterialPickerButton");
+document.querySelectorAll(".js-material-slot-button").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const slotNum = event.target.dataset.slotNum;
+    console.log("slotNum", slotNum);
 
-  openButton.addEventListener("click", () => {
     DialogService.openWithContent("/alchemy/material-picker");
   });
 });
