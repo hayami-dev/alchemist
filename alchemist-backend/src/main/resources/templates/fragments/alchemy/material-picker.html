@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>マテリアルアイテムピッカー</title>
   </head>
-  <body th:fragment="materialPicker">
-    <div>マテリアルアイテムピッカー</div>
+  <body>
+    <div th:fragment="materialPicker">
+      <ul>
+        <th:block th:each="inventoryItem : ${items}">
+          <li th:text="${inventoryItem.item.name}"></li>
+          <li th:text="${inventoryItem.quantity}"></li>
+        </th:block>
+      </ul>
+    </div>
   </body>
 </html>

@@ -2,6 +2,7 @@ package com.example.app.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.InventoryItem;
@@ -16,7 +17,7 @@ public class AlchemyService {
 
   // 手持ちアイテム一覧を表示させる用
   private final InventoryMapper inventoryMapper;
-  // TODO: ？
+  // TODO: ？どこでつかうんだこれ…
   private final CatalogService catalogService;
 
   // 調合結果のアイテム情報を取得する。
@@ -27,7 +28,9 @@ public class AlchemyService {
   // マテリアルアイテムを選択するためのインベントリを表示させる。
   // TODO: DEBUG 手持ちアイテムはいったん無制限の全アイテムにする
   public List<InventoryItem> getInventory(Long playerId) {
-    return null;
+    System.out.println("プレイヤー情報" + playerId);
+    List<InventoryItem> items = inventoryMapper.findAll(playerId);
+    return items;
   }
 
   // マテリアルアイテムの値を計算する。渡された計算のタイプによって

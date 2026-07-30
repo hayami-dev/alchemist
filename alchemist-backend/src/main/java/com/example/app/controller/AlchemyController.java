@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.app.domain.Item;
 import com.example.app.service.AlchemyService;
-import com.example.app.service.InventoryService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AlchemyController {
 
   private final AlchemyService alchemyService;
-  private final InventoryService inventoryService;
 
   private static final String VIEW_PREFIX = "alchemy/";
+  private static final Long DEBUG_PLAYER_ID = 1L;
 
   // 調合画面を表示する。
   // インベントリを表示してマテリアルアイテムを選択できるようにする。
   @GetMapping
   public String showAlchemy(
       HttpSession session,
-      Long playerId,
       Model model) {
     String message = "hoge";
     model.addAttribute("message", message);
@@ -61,11 +59,10 @@ public class AlchemyController {
   }
 
   // material-pickerを返すエンドポイント
-  // TODO:設計書に追記
   @GetMapping("/material-picker")
-  public String materialPicer(Model model) {
+  public String materialPicker(Model model) {
     // インベントリを取得
-    model.addAttribute("items", inventoryService.getMaterials());
+    model.addAttribute("items", alchemyService.getInventory(DEBUG_PLAYER_ID));
     return "fragments/alchemy/material-picker :: materialPicker";
   }
 
