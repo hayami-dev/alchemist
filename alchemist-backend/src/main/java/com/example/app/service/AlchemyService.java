@@ -2,12 +2,12 @@ package com.example.app.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.InventoryItem;
 import com.example.app.domain.Item;
 import com.example.app.mapper.InventoryMapper;
+import com.example.app.mapper.ItemMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlchemyService {
 
+  // 調合結果のアイテムを1件返す用
+  private final ItemMapper itemMapper;
   // 手持ちアイテム一覧を表示させる用
   private final InventoryMapper inventoryMapper;
-  // TODO: ？どこでつかうんだこれ…
-  private final CatalogService catalogService;
 
   // 調合結果のアイテム情報を取得する。
   public Item getAlchemyItem(Long itemId) {
