@@ -9,8 +9,10 @@
     <div th:fragment="materialPicker">
       <ul>
         <th:block th:each="inventoryItem : ${items}">
-          <li th:text="${inventoryItem.item.name}"></li>
-          <li th:text="${inventoryItem.quantity}"></li>
+          <li class="flex justify-between">
+            <button type="button" th:text="${inventoryItem.item.name}"></button>
+            <span th:text="${inventoryItem.quantity}"></span>
+          </li>
         </th:block>
       </ul>
     </div>
