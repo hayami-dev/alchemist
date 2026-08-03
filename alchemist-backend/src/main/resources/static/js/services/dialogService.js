@@ -6,9 +6,14 @@ export const DialogService = {
     document.getElementById("dialogContent").innerHTML = html;
     document.getElementById("dialogShell").classList.remove("hidden");
     document.getElementById("dialogShell").classList.add("flex");
+
+    if (window.onDialogContentLoaded) {
+      window.onDialogContentLoaded();
+    }
   },
   close() {
     document.getElementById("dialogShell").classList.add("hidden");
+    document.getElementById("dialogShell").classList.remove("flex");
   },
 };
 

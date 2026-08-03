@@ -10,7 +10,13 @@
       <ul>
         <th:block th:each="inventoryItem : ${items}">
           <li class="flex justify-between">
-            <button type="button" th:text="${inventoryItem.item.name}"></button>
+            <button
+              type="button"
+              class="js-material-picker-item"
+              th:data-item-id="${inventoryItem.item.id}"
+              th:data-item-name="${inventoryItem.item.name}"
+              th:text="${inventoryItem.item.name}"
+            ></button>
             <span th:text="${inventoryItem.quantity}"></span>
           </li>
         </th:block>
