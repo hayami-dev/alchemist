@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS items (
     can_sell BOOLEAN NOT NULL DEFAULT TRUE COMMENT '重要アイテムやイベント品を売らせない防衛ロック',
     value INT NULL COMMENT '調合値',
     efficiency INT NULL COMMENT '調合補正値',
+    tool_effect_type VARCHAR(20) NULL COMMENT 'TOOLアイテムの効果種別（EFFICIENCY, UNLOCK_MULTIPLY, UNLOCK_MODULOなど）。itemTypeがTOOLの場合のみ使用',
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ゲーム内に存在するすべてのアイテムのマスターデータ。図鑑のベースとなる情報';
 
