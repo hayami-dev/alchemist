@@ -9,6 +9,7 @@ import com.example.app.domain.InventoryItem;
 import com.example.app.domain.Item;
 import com.example.app.domain.ToolItem;
 import com.example.app.domain.enums.CalculationType;
+import com.example.app.domain.enums.ItemType;
 import com.example.app.mapper.InventoryMapper;
 import com.example.app.mapper.ItemMapper;
 
@@ -31,9 +32,9 @@ public class AlchemyService {
   // マテリアルアイテムを選択するためのインベントリを表示させる。
   // TODO: DEBUG 手持ちアイテムはいったん無制限の全アイテムにする
   public List<InventoryItem> getInventory(Long playerId) {
-    System.out.println("プレイヤー情報" + playerId);
-    List<InventoryItem> items = inventoryMapper.findAll(playerId);
-    return items;
+    List<InventoryItem> materials = inventoryMapper.findAll(playerId).stream()
+        .filter(item -> item.getItem().getItemType() == ItemType.MATERIAL).toList();
+    return materials;
   }
 
   // 調合方法を一覧を取得する。
