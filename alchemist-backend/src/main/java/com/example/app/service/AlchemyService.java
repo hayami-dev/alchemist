@@ -1,7 +1,9 @@
 package com.example.app.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -43,7 +45,7 @@ public class AlchemyService {
   public List<CalculationType> getUnlockedCalcTypes(Long playerId) {
     List<InventoryItem> items = inventoryMapper.findAll(playerId);
 
-    List<CalculationType> available = new ArrayList<>();
+    Set<CalculationType> available = new LinkedHashSet<>();
     available.add(CalculationType.ADD);
 
     for (InventoryItem inv : items) {
@@ -57,7 +59,7 @@ public class AlchemyService {
       }
     }
 
-    return available;
+    return new ArrayList<>(available);
   }
 
   // マテリアルアイテムの値を計算する。渡された計算のタイプによって
