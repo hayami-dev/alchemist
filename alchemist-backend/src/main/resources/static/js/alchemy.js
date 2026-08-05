@@ -13,15 +13,32 @@ const selectedMaterials = {
   3: null,
 };
 
+// calc-slotへ調合方法の情報を渡す
+// 初期値は足し算
+const selectedCalc = {
+  1: "add",
+};
+
 // 今どのスロットのためにピッカーを開いているか
-let currentTargetSlot = null;
+let currentTargetMaterialSlot = null;
+let currentTargetCalcSlot = null;
 
 // material-pickerの表示/非表示切替
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".js-material-slot-button").forEach((button) => {
     button.addEventListener("click", (event) => {
-      currentTargetSlot = event.target.dataset.slotNum;
+      currentTargetMaterialSlot = event.target.dataset.slotNum;
       DialogService.openWithContent("/alchemy/material-picker");
+    });
+  });
+});
+
+// calc-pickerの表示/非表示切り替え
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".js-calc-slot-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      currentTargetCalcSlot = event.target.dataset.slotNum;
+      DialogService.openWithContent("/alchemy/calc-picker");
     });
   });
 });
@@ -59,7 +76,10 @@ const bindMaterialPickerEvents = () => {
       const itemId = event.currentTarget.dataset.itemId;
       const itemName = event.currentTarget.dataset.itemName;
 
-      selectedMaterials[currentTargetSlot] = { id: itemId, name: itemName };
+      selectedMaterials[currentTargetMaterialSlot] = {
+        id: itemId,
+        name: itemName,
+      };
 
       console.log("hoge");
 

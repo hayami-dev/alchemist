@@ -1,11 +1,14 @@
 package com.example.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.app.domain.InventoryItem;
 import com.example.app.domain.Item;
+import com.example.app.domain.ToolItem;
+import com.example.app.domain.enums.CalculationType;
 import com.example.app.mapper.InventoryMapper;
 import com.example.app.mapper.ItemMapper;
 
@@ -31,6 +34,29 @@ public class AlchemyService {
     System.out.println("プレイヤー情報" + playerId);
     List<InventoryItem> items = inventoryMapper.findAll(playerId);
     return items;
+  }
+
+  // 調合方法を一覧を取得する。
+  // インベントリをチェックし、該当アイテムによって返す値を調整する。
+  // TODO: 設計書に追加
+  public List<CalculationType> getUnlockedCalcTypes(Long playerId) {
+    List<InventoryItem> items = inventoryMapper.findAll(playerId);
+
+    List<CalculationType> available = new ArrayList<>();
+    available.add(CalculationType.ADD);
+
+    for (InventoryItem inv : items) {
+      Item item = inv.getItem();
+      if (item instanceof ToolItem toolItem) {
+        CalculationType unlocked = toolItem.getToolEffectType().toUnlockedCalculationType();
+        System.out.println("unlocked" + unlocked);
+        if (unlocked != null) {
+          available.add(unlocked);
+        }
+      }
+    }
+
+    return available;
   }
 
   // マテリアルアイテムの値を計算する。渡された計算のタイプによって

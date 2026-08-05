@@ -5,6 +5,8 @@
 
 package com.example.app.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.app.domain.Item;
+import com.example.app.domain.enums.CalculationType;
 import com.example.app.service.AlchemyService;
 
 import jakarta.servlet.http.HttpSession;
@@ -64,6 +67,17 @@ public class AlchemyController {
     // インベントリを取得
     model.addAttribute("items", alchemyService.getInventory(DEBUG_PLAYER_ID));
     return "fragments/alchemy/material-picker :: materialPicker";
+  }
+
+  // calc-pickerを返すエンドポイント
+  // TODO: 設計書に追加
+  @GetMapping("/calc-picker")
+  public String calcPicker(Model model) {
+    // 計算方法一覧を取得
+    List<CalculationType> unlockedCalcTypes = alchemyService.getUnlockedCalcTypes(DEBUG_PLAYER_ID);
+    model.addAttribute("unlockedCalcTypes", unlockedCalcTypes);
+    System.out.println("unlockedCalcTypes" + unlockedCalcTypes);
+    return "fragments/alchemy/calc-picker :: calcPicker";
   }
 
 }
