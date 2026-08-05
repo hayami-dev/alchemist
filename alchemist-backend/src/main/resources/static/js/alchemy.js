@@ -15,8 +15,10 @@ const selectedMaterials = {
 
 // calc-slotへ調合方法の情報を渡す
 // 初期値は足し算
-const selectedCalc = {
-  1: "add",
+// TODO: 直じゃなくてenumをもってくる？
+const selectedCalcs = {
+  1: "ADD",
+  2: "ADD",
 };
 
 // 今どのスロットのためにピッカーを開いているか
@@ -69,7 +71,7 @@ if (craftButton) {
   });
 }
 
-// ページ読み込み後、material-pickerの中身をfetchで差し替える用意
+// ダイアログ読み込み後、material-pickerの中身をfetchで差し替える用意
 const bindMaterialPickerEvents = () => {
   document.querySelectorAll(".js-material-picker-item").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -81,8 +83,6 @@ const bindMaterialPickerEvents = () => {
         name: itemName,
       };
 
-      console.log("hoge");
-
       renderMaterialSlots();
       DialogService.close();
     });
@@ -92,11 +92,45 @@ const bindMaterialPickerEvents = () => {
 // 状態(selectMaterials)を元に、各スロットの見た目を書き換える関数
 const renderMaterialSlots = () => {
   for (const slotNum in selectedMaterials) {
-    const slotButton = document.querySelector(`[data-slot-num="${slotNum}"]`);
+    const slotButton = document.querySelector(
+      `.js-material-slot-button[data-slot-num="${slotNum}"]`,
+    );
     const material = selectedMaterials[slotNum];
     slotButton.textContent = material ? material.name : `素材${slotNum}`;
   }
 };
 
+// ダイアログ読み込み後、calc-pickerの中身をfetchで差し替える用意
+const bindCalcPickerEvents = () => {
+  document.querySelectorAll(".js-calc-picker-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const calcType = event.currentTarget.dataset.calcType;
+
+      selectedCalcs[currentTargetCalcSlot] = calcType;
+
+      renderCalcSlots();
+      DialogService.close();
+    });
+  });
+};
+
+//
+const renderCalcSlots = () => {
+  for (const slotNum in selectedCalcs) {
+    const slotButton = document.querySelector(
+      `.js-calc-slot-button[data-slot-num="${slotNum}"]`,
+    );
+    const calcType = selectedCalcs[slotNum];
+    // calc-slot側にcalc-iconを表示する想定なら、テキストではなく中身のHTMLを差し替える必要がある
+    slotButton.textContent = calcType;
+  }
+};
+
 // 最後にピッカーの中身を差し替える
-window.onDialogContentLoaded = bindMaterialPickerEvents;
+// ダイアログの中身が差し込まれた後、何を初期化すべきかをまとめて判断する
+const bindDialogContentEvents = () => {
+  bindMaterialPickerEvents();
+  bindCalcPickerEvents();
+};
+
+window.onDialogContentLoaded = bindDialogContentEvents;

@@ -10,7 +10,11 @@
       <ul>
         <th:block th:each="calcType : ${unlockedCalcTypes}">
           <li>
-            <button type="button">
+            <button
+              type="button"
+              th:data-calc-type="${calcType}"
+              class="js-calc-picker-button"
+            >
               <div
                 th:replace="~{fragments/common/calc-icon :: calcIcon(${calcType})}"
               ></div>
