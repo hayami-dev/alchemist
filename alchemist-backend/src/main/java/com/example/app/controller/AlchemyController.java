@@ -37,8 +37,8 @@ public class AlchemyController {
   public String showAlchemy(
       HttpSession session,
       Model model) {
-    String message = "hoge";
-    model.addAttribute("message", message);
+    model.addAttribute("allCalcTypes", CalculationType.values());
+    model.addAttribute("defaultCalcType", CalculationType.ADD);
     return VIEW_PREFIX + "alchemy";
   }
 

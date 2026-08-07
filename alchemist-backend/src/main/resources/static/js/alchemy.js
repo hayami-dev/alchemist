@@ -89,7 +89,7 @@ const bindMaterialPickerEvents = () => {
   });
 };
 
-// 状態(selectMaterials)を元に、各スロットの見た目を書き換える関数
+// 状態(selectedMaterials)を元に、各スロットの見た目を書き換える関数
 const renderMaterialSlots = () => {
   for (const slotNum in selectedMaterials) {
     const slotButton = document.querySelector(
@@ -114,15 +114,29 @@ const bindCalcPickerEvents = () => {
   });
 };
 
-//
+// 状態(selectedCalcs)を元に、各スロットの見た目を書き換える関数
 const renderCalcSlots = () => {
   for (const slotNum in selectedCalcs) {
     const slotButton = document.querySelector(
       `.js-calc-slot-button[data-slot-num="${slotNum}"]`,
     );
     const calcType = selectedCalcs[slotNum];
-    // calc-slot側にcalc-iconを表示する想定なら、テキストではなく中身のHTMLを差し替える必要がある
-    slotButton.textContent = calcType;
+
+    // スロット内の全アイコンを非表示
+    const allIcons = slotButton.querySelectorAll(".js-calc-icon");
+    allIcons.forEach((icon) => icon.classList.add("hidden"));
+
+    console.log("allIcons", allIcons);
+
+    // calcType に一致するアイコンだけを表示する
+    if (calcType) {
+      const activeIcon = slotButton.querySelector(
+        `.js-calc-icon[data-calc-type="${calcType}"]`,
+      );
+      if (activeIcon) {
+        activeIcon.classList.remove("hidden");
+      }
+    }
   }
 };
 

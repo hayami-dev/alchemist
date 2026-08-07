@@ -9,13 +9,14 @@
     <button
       type="button"
       th:data-slot-num="${num}"
-      th:fragment="calcSlot(num)"
+      th:fragment="calcSlot(num, selectedType, allCalcTypes)"
       class="js-calc-slot-button size-icon-md border border-amber-950 bg-amber-100 text-amber-950 text-xs rounded-3xl flex items-center justify-center hover:opacity-80"
     >
-      <span>方法[[${num}]]</span>
-      <div
-        th:replace="~{fragments/common/calc-icon :: calcIcon(${selectedType})}"
-      ></div>
+      <th:block th:each="calcType: ${allCalcTypes}">
+        <div
+          th:replace="~{fragments/common/calc-icon :: calcIcon(${calcType}, ${calcType == selectedType} ? '' : 'hidden')}"
+        ></div>
+      </th:block>
     </button>
   </body>
 </html>

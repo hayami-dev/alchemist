@@ -22,13 +22,13 @@
               th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
             ></div>
             <div
-              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(1)}"
+              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(1, ${defaultCalcType}, ${allCalcTypes})}"
             ></div>
             <div
               th:replace="~{fragments/alchemy/material-slot :: materialSlot(2)}"
             ></div>
             <div
-              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(2)}"
+              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(2, ${defaultCalcType}, ${allCalcTypes})}"
             ></div>
             <div
               th:replace="~{fragments/alchemy/material-slot :: materialSlot(3)}"
