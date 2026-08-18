@@ -1,3 +1,9 @@
+/**
+ * 調合の実行に関するサービス。
+ * アイテム、インベントリの取得および、
+ * 調合に関する計算、バリデーションサービスのフィールドを保持する。
+ * TODO: 設計書を修正
+ */
 package com.example.app.service;
 
 import java.util.ArrayList;
@@ -7,11 +13,15 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.example.app.controller.dto.CraftRequest;
 import com.example.app.domain.InventoryItem;
 import com.example.app.domain.Item;
+import com.example.app.domain.Recipe;
+import com.example.app.domain.RecipeDetail;
 import com.example.app.domain.ToolItem;
 import com.example.app.domain.enums.CalculationType;
 import com.example.app.domain.enums.ItemType;
+import com.example.app.mapper.AlchemyMapper;
 import com.example.app.mapper.InventoryMapper;
 import com.example.app.mapper.ItemMapper;
 
@@ -25,10 +35,38 @@ public class AlchemyService {
   private final ItemMapper itemMapper;
   // 手持ちアイテム一覧を表示させる用
   private final InventoryMapper inventoryMapper;
+  // 調合の計算に関するサービス
+  private final AlchemyCalculationService alchemyCalculationService;
+  // 調合のバリデーションに関するサービス
+  private final AlchemyValidationService alchemyValidationService;
+  // 調合値からitemIdを取得する用
+  private final AlchemyMapper alchemyMapper;
 
-  // 調合結果のアイテム情報を取得する。
-  public Item getAlchemyItem(Long itemId) {
-    return null;
+  // 調合結果の取得に使う定数
+  private static final int MAX_VALID_VALUE = 100;
+  private static final Long BURNT_ITEM_ID = 68L; // 101以上
+  private static final Long ZERO_RESULT_ITEM_ID = 31L; // 0の時の固定アイテム
+  private static final Long ONE_RESULT_ITEM_ID = 32L; // 1の時の固定アイテム
+
+  /* Controllerから呼ばれる調合実行の本体 */
+
+  // 調合を実行する。
+  // 調合結果のアイテム情報をcontrollerへ返す。
+  // TODO:設計書を修正
+  public Item craftItem(CraftRequest request, Long playerId) {
+    List<Long> materialIds = request.getMaterialIds();
+    List<CalculationType> calcTypes = request.getCalcTypes();
+
+    // TODO:Recipeへrequestを詰め込む
+
+    // バリデーションを実行
+    // TODO: 例外クラスの実装
+
+    // 計算を実行
+    int resultItemValue = alchemyCalculationService.calcMaterialValue(materialIds, calcTypes);
+
+    // Itemクラスを1件返す
+    return getResultItem(resultItemValue);
   }
 
   // マテリアルアイテムを選択するためのインベントリを表示させる。
@@ -62,25 +100,27 @@ public class AlchemyService {
     return new ArrayList<>(available);
   }
 
-  // マテリアルアイテムの値を計算する。渡された計算のタイプによって
-  // additionMaterial, multiplyMaterial, moduloMaterialいずれかを走らせる。
-  public int calcMaterialValue(Long recipeId) {
-    return 0;
-  }
+  // resultItemValueの値によって返すitemIdを計算する
+  // TODO:設計書に追加
+  public Item getResultItem(int resultItemValue) {
+    // resultItemValueが特殊な値だった場合の処理
+    if (resultItemValue > MAX_VALID_VALUE) {
+      return itemMapper.findById(BURNT_ITEM_ID);
+    }
+    if (resultItemValue == 0) {
+      return itemMapper.findById(ZERO_RESULT_ITEM_ID);
+    }
+    if (resultItemValue == 1) {
+      return itemMapper.findById(ONE_RESULT_ITEM_ID);
+    }
 
-  // 渡された二つの値を足し算する。
-  public int additionMaterial(int val1, int val2) {
-    return 0;
-  }
+    // 2～100の通常処理
+    // DBのcraft_resultsテーブルから渡した値に対応するitemIdを取得する
+    // TODO:例外処理（対応するアイテムがあるかどうか）
+    Long itemId = alchemyMapper.getCraftItemId(resultItemValue);
 
-  // 渡された二つの値を掛け算する。
-  public int multiplyMaterial(int val1, int val2) {
-    return 0;
-  }
-
-  // 渡された二つの値を割り算し、余りを出す。
-  public int moduloMaterial(int val1, int val2) {
-    return 0;
+    // Itemクラスを1件返す
+    return itemMapper.findById(itemId);
   }
 
   // InventoryService.addItem を呼び出し、調合によって完成したアイテムを
@@ -93,31 +133,6 @@ public class AlchemyService {
   // 調合の素材にしたアイテムをインベントリから削除（update）する。
   public void consumeUsedMaterials(Long playerId, Long recipeId) {
 
-  }
-
-  // 調合素材が足りるかどうかを判定する。
-  public boolean hasEnoughMaterials(Long playerId, Long recipeId) {
-    return false;
-  }
-
-  // 新しい調合レシピかどうかを判定する。
-  public boolean isNewRecipe(Long playerId, Long recipeId) {
-    return false;
-  }
-
-  // ItemTypeが「MATERIAL」のみ許可するバリデーション。
-  public boolean isMaterialItem(List<Item> items) {
-    return false;
-  }
-
-  // 調合結果が素材アイテムと同じアイテムではない場合のみ許可するバリデーション。
-  public boolean isDefferentResult(Long itemId, List<Long> materialItemIds) {
-    return false;
-  }
-
-  // 調合結果のvalueが負の値だった場合、valueを正の値に変換して返す。
-  public boolean normalizeToPositive(int itemValue) {
-    return false;
   }
 
 }

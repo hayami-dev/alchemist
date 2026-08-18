@@ -7,9 +7,10 @@
   </head>
   <body>
     <button
-      th:fragment="primaryButton(type,text)"
+      th:fragment="primaryButton(type,text,class)"
       th:type="${type}"
       class="bg-blue-600 text-white text-2xl py-2 px-4 rounded-full hover:opacity-80"
+      th:classappend="${class}"
     >
       [[${text}]]
     </button>

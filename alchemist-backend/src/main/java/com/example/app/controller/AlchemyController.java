@@ -7,12 +7,13 @@ package com.example.app.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.app.controller.dto.CraftRequest;
 import com.example.app.domain.Item;
 import com.example.app.domain.enums.CalculationType;
 import com.example.app.service.AlchemyService;
@@ -20,6 +21,7 @@ import com.example.app.service.AlchemyService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/alchemy")
@@ -50,13 +52,17 @@ public class AlchemyController {
 
   // 結果を完了画面に渡し、調合したアイテムをインベントリに追加、マテリアルアイテムを減らす処理を行う。
   // また、レシピ情報を保存する。
+  // TODO: 設計書、UML図の引数の修正
   @PostMapping("/craft")
-  public String craftItem(
-      RedirectAttributes ra,
-      HttpSession session,
-      Long playerId,
-      Item item,
-      Long recipeId) {
+  public ResponseEntity<?> craftItem(
+      // RequestBodyで送られた配列データをListで受け取る
+      @RequestBody CraftRequest request,
+      HttpSession httpSession) {
+    Item result = alchemyService.craftItem(request, DEBUG_PLAYER_ID);
+    System.out.println("result:" + result);
+    System.out.println("resultName:" + result.getName());
+
+    // TODO: recipeの登録
 
     return null;
   }
@@ -76,7 +82,6 @@ public class AlchemyController {
     // 計算方法一覧を取得
     List<CalculationType> unlockedCalcTypes = alchemyService.getUnlockedCalcTypes(DEBUG_PLAYER_ID);
     model.addAttribute("unlockedCalcTypes", unlockedCalcTypes);
-    System.out.println("unlockedCalcTypes" + unlockedCalcTypes);
     return "fragments/alchemy/calc-picker :: calcPicker";
   }
 

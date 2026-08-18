@@ -46,16 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // 「調合する」ボタンの取得
-const craftButton = document.getElementById("craftButton");
+const craftButton = document.querySelector(".js-craft-button");
 
 // 調合結果をJavaへ渡す
 if (craftButton) {
   craftButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
+    // materialIdの配列(数値)を作成
     const materialIds = Object.values(selectedMaterials)
       .filter((material) => material !== null)
       .map((material) => material.id);
+
+    // calcTypeの配列(文字列)を作成
+    const requiredCalcCount = materialIds.length - 1;
+    const calcTypes = Object.values(selectedCalcs).slice(0, requiredCalcCount);
 
     if (materialIds.length < 2) {
       alert("素材を2つ以上選んでください");
@@ -63,7 +68,7 @@ if (craftButton) {
     }
 
     try {
-      const result = await AlchemyService.craft(materialIds);
+      const result = await AlchemyService.craft(materialIds, calcTypes);
       console.log("調合結果", result);
     } catch (error) {
       console.error(error);
@@ -125,8 +130,6 @@ const renderCalcSlots = () => {
     // スロット内の全アイコンを非表示
     const allIcons = slotButton.querySelectorAll(".js-calc-icon");
     allIcons.forEach((icon) => icon.classList.add("hidden"));
-
-    console.log("allIcons", allIcons);
 
     // calcType に一致するアイコンだけを表示する
     if (calcType) {

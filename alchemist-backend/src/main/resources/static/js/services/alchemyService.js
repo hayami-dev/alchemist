@@ -5,6 +5,8 @@ import { apiClient } from "./apiClient.js";
 
 export const AlchemyService = {
   craft(materialIds, calcTypes) {
-    return apiClient.post("/api/alchemy/craft", { materialIds, calcTypes });
+    // 配列でmaterialIdとcalcTypeを渡す
+    // TODO:バリデーション
+    return apiClient.post("/alchemy/craft", { materialIds, calcTypes });
   },
 };

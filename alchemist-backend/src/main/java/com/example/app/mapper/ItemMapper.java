@@ -1,7 +1,6 @@
 package com.example.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import com.example.app.domain.Item;
 
