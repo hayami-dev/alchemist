@@ -2,8 +2,8 @@
  * 調合画面の操作に関するメソッド群。
  */
 
-import { DialogService } from "./services/dialogService.js";
-import { AlchemyService } from "./services/alchemyService.js";
+import { DialogService } from "../services/dialogService.js";
+import { AlchemyService } from "../services/alchemyService.js";
 
 // material-slotへ素材の情報を渡す
 // スロット番号 → 選択されたアイテムIDのオブジェクト
@@ -69,9 +69,13 @@ if (craftButton) {
 
     try {
       const result = await AlchemyService.craft(materialIds, calcTypes);
-      console.log("調合結果", result);
+
+      sessionStorage.setItem("craftResult", JSON.stringify(result));
+      window.location.href = "/alchemy/complete";
     } catch (error) {
       console.error(error);
+      // TODO: きちんとしたUIの作成
+      alert("調合に失敗しました");
     }
   });
 }

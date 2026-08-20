@@ -4,9 +4,12 @@
 import { apiClient } from "./apiClient.js";
 
 export const AlchemyService = {
-  craft(materialIds, calcTypes) {
-    // 配列でmaterialIdとcalcTypeを渡す
+  async craft(materialIds, calcTypes) {
     // TODO:バリデーション
-    return apiClient.post("/alchemy/craft", { materialIds, calcTypes });
+    // 受け取った配列2つをJSONファイルにしてAPIへ送る
+    return await apiClient.post("/alchemy/craft", {
+      materialIds,
+      calcTypes,
+    });
   },
 };

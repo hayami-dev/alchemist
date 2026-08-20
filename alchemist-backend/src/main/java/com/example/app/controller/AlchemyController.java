@@ -45,9 +45,11 @@ public class AlchemyController {
   }
 
   // 調合完了画面を表示する。調合結果のアイテムを表示する。
+  // TODO:設計書を修正
   @GetMapping("/complete")
-  public String showAlchemyComplete(Model model) {
-    return null;
+  public String showAlchemyComplete() {
+    // ここではURLベタ打ち対応を行わない
+    return VIEW_PREFIX + "complete";
   }
 
   // 結果を完了画面に渡し、調合したアイテムをインベントリに追加、マテリアルアイテムを減らす処理を行う。
@@ -59,12 +61,10 @@ public class AlchemyController {
       @RequestBody CraftRequest request,
       HttpSession httpSession) {
     Item result = alchemyService.craftItem(request, DEBUG_PLAYER_ID);
-    System.out.println("result:" + result);
-    System.out.println("resultName:" + result.getName());
 
     // TODO: recipeの登録
 
-    return null;
+    return ResponseEntity.ok(result);
   }
 
   // material-pickerを返すエンドポイント
