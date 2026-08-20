@@ -53,32 +53,68 @@ if (craftButton) {
   craftButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    // materialIdの配列(数値)を作成
-    const materialIds = Object.values(selectedMaterials)
-      .filter((material) => material !== null)
-      .map((material) => material.id);
+    // 選択中の素材オブジェクトを取得
+    const activeMaterials = Object.values(selectedMaterials).filter(
+      (material) => material !== null,
+    );
 
-    // calcTypeの配列(文字列)を作成
-    const requiredCalcCount = materialIds.length - 1;
-    const calcTypes = Object.values(selectedCalcs).slice(0, requiredCalcCount);
-
-    if (materialIds.length < 2) {
+    if (activeMaterials.length < 2) {
       alert("素材を2つ以上選んでください");
       return;
     }
 
-    try {
-      const result = await AlchemyService.craft(materialIds, calcTypes);
+    // ここで確認ダイアログを出す
+    await DialogService.openWithContent("/alchemy/confirm-modal", {
+      positiveText: "調合する",
+      negativeText: "やめる",
+      onPositive: async () => {
+        DialogService.close();
 
-      sessionStorage.setItem("craftResult", JSON.stringify(result));
-      window.location.href = "/alchemy/complete";
-    } catch (error) {
-      console.error(error);
-      // TODO: きちんとしたUIの作成
-      alert("調合に失敗しました");
+        // 調合・送信処理 materialId,calcTypeの配列(文字列)を作成
+        const materialIds = activeMaterials.map((m) => m.id);
+        const requiredCalcCount = materialIds.length - 1;
+        const calcTypes = Object.values(selectedCalcs).slice(
+          0,
+          requiredCalcCount,
+        );
+        // alchemyService.jsへ渡す
+        try {
+          const result = await AlchemyService.craft(materialIds, calcTypes);
+
+          sessionStorage.setItem("craftResult", JSON.stringify(result));
+          window.location.href = "/alchemy/complete";
+        } catch (error) {
+          console.error(error);
+          // TODO: きちんとしたUIの作成
+          alert("調合に失敗しました");
+        }
+      },
+    });
+
+    // 確認ダイアログへ素材の情報を渡す
+    const listElement = document.getElementById("confirmMaterialList");
+    if (listElement) {
+      // 素材を集計
+      const summarized = summarizeMaterials(activeMaterials);
+      listElement.innerHTML = summarized
+        .map((m) => `<li>${m.name}<span>×${m.count}</span></li>`)
+        .join("");
     }
   });
 }
+
+// 表示のため、確認ダイアログに表示する素材を集計する
+const summarizeMaterials = (materials) => {
+  const summary = {};
+  for (const material of materials) {
+    if (summary[material.name]) {
+      summary[material.name].count += 1;
+    } else {
+      summary[material.name] = { name: material.name, count: 1 };
+    }
+  }
+  return Object.values(summary);
+};
 
 // ダイアログ読み込み後、material-pickerの中身をfetchで差し替える用意
 const bindMaterialPickerEvents = () => {

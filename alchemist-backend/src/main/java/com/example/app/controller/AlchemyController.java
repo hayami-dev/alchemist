@@ -85,4 +85,10 @@ public class AlchemyController {
     return "fragments/alchemy/calc-picker :: calcPicker";
   }
 
+  // 確認ダイアログ(confirmModal)を返すエンドポイント
+  // TODO:設計書に追加
+  @GetMapping("/confirm-modal")
+  public String confirmModal() {
+    return "fragments/alchemy/confirm-modal :: confirmModal";
+  }
 }
