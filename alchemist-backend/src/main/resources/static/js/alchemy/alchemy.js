@@ -191,3 +191,17 @@ const bindDialogContentEvents = () => {
 };
 
 window.onDialogContentLoaded = bindDialogContentEvents;
+
+// material-slot3の素材をクリアするボタンの処理
+document.addEventListener("DOMContentLoaded", () => {
+  const clearMaterialsButton = document.getElementById(
+    "js-clear-materials-button",
+  );
+
+  if (clearMaterialsButton) {
+    clearMaterialsButton.addEventListener("click", () => {
+      selectedMaterials[3] = null;
+      renderMaterialSlots();
+    });
+  }
+});
