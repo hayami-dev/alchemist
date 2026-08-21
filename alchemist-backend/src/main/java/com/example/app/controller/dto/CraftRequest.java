@@ -1,7 +1,6 @@
 /**
  * フロントから渡された調合素材および方法を受け取るDTO。
  * 素材(Long)と調合方法(文字列)のListを保持する。
- * TODO:設計書に加筆
  */
 
 package com.example.app.controller.dto;

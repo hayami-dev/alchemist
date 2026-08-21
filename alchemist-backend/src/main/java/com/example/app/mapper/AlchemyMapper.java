@@ -1,6 +1,5 @@
 /**
  * 調合に関するmapper。
- * TODO:設計書に追加
  */
 
 package com.example.app.mapper;

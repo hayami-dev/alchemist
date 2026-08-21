@@ -45,7 +45,6 @@ public class AlchemyController {
   }
 
   // 調合完了画面を表示する。調合結果のアイテムを表示する。
-  // TODO:設計書を修正
   @GetMapping("/complete")
   public String showAlchemyComplete() {
     // ここではURLベタ打ち対応を行わない
@@ -54,7 +53,6 @@ public class AlchemyController {
 
   // 結果を完了画面に渡し、調合したアイテムをインベントリに追加、マテリアルアイテムを減らす処理を行う。
   // また、レシピ情報を保存する。
-  // TODO: 設計書、UML図の引数の修正
   @PostMapping("/craft")
   public ResponseEntity<?> craftItem(
       // RequestBodyで送られた配列データをListで受け取る
@@ -76,7 +74,6 @@ public class AlchemyController {
   }
 
   // calc-pickerを返すエンドポイント
-  // TODO: 設計書に追加
   @GetMapping("/calc-picker")
   public String calcPicker(Model model) {
     // 計算方法一覧を取得
@@ -86,7 +83,6 @@ public class AlchemyController {
   }
 
   // 確認ダイアログ(confirmModal)を返すエンドポイント
-  // TODO:設計書に追加
   @GetMapping("/confirm-modal")
   public String confirmModal() {
     return "fragments/alchemy/confirm-modal :: confirmModal";
