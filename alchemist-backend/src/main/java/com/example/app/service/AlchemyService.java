@@ -21,6 +21,7 @@ import com.example.app.domain.RecipeDetail;
 import com.example.app.domain.ToolItem;
 import com.example.app.domain.enums.CalculationType;
 import com.example.app.domain.enums.ItemType;
+import com.example.app.exception.InvalidCraftException;
 import com.example.app.mapper.AlchemyMapper;
 import com.example.app.mapper.InventoryMapper;
 import com.example.app.mapper.ItemMapper;
@@ -59,14 +60,21 @@ public class AlchemyService {
 
     // TODO:Recipeへrequestを詰め込む
 
-    // バリデーションを実行
-    // TODO: 例外クラスの実装
+    // 渡された素材、調合方法のバリデーションを実行
+    alchemyValidationService.validateCraftItem(materialIds, calcTypes, playerId);
 
     // 計算を実行
     int resultItemValue = alchemyCalculationService.calcMaterialValue(materialIds, calcTypes);
 
     // Itemクラスを1件返す
-    return getResultItem(resultItemValue);
+    Item resultItem = getResultItem(resultItemValue);
+
+    // 返ってきたItemクラスが意味のある結果かバリデーションを実行
+    if (!alchemyValidationService.isDifferentResult(resultItem.getId(), materialIds)) {
+      throw new InvalidCraftException("素材と同じアイテムが調合結果になりました");
+    }
+
+    return resultItem;
   }
 
   // マテリアルアイテムを選択するためのインベントリを表示させる。
