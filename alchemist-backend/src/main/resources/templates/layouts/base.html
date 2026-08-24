@@ -13,14 +13,14 @@
     <!-- TailwindCSS、ベースCSSの読み込み -->
     <link rel="stylesheet" th:href="@{/css/output.css}" />
   </head>
-  <body>
-    <!-- TODO:ここにheader -->
+  <body class="flex flex-col min-h-dvh justify-between">
+    <header th:replace="~{fragments/layout/header :: header}"></header>
     <main layout:fragment="content">
       <!-- ここに各ページの中身が差し込まれる -->
     </main>
+    <footer th:replace="~{fragments/layout/footer :: footer}"></footer>
     <!-- ダイアログ -->
     <div th:replace="~{fragments/common/dialog-shell :: dialogShell}"></div>
-    <!-- TODO:ここにfooter -->
     <script type="module" th:src="@{/js/services/dialogService.js}"></script>
   </body>
 </html>

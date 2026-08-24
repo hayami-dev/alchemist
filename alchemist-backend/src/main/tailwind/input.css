@@ -8,6 +8,10 @@
     color: #3a3030;
   }
 
+  main {
+    flex-grow: 1;
+  }
+
   button:hover {
     cursor: pointer;
   }
