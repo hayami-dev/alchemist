@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.ItemMapper">
+  <resultMap id="ItemResultMap" type="com.example.app.domain.Item">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="itemType" column="itemType"/>
+    <result property="description" column="description"/>
+    <result property="buyPrice" column="buy_price"/>
+    <result property="sellPrice" column="sell_price"/>
+    <result property="canSell" column="can_sell"/>
+    <discriminator javaType="string" column="itemType">
+      <case value="MATERIAL" resultType="com.example.app.domain.MaterialItem">
+        <result property="rarityId" column="rarities_id"/>
+        <result property="starRank" column="star_rank"/>
+        <result property="value" column="value"/>
+      </case>
+      <case value="TOOL" resultType="com.example.app.domain.ToolItem">
+        <result property="efficiency" column="efficiency"/>
+        <result property="toolEffectType" column="tool_effect_type"/>
+      </case>
+    </discriminator>
+  </resultMap>
+  
+  <select id="findById" resultMap="ItemResultMap">
+    SELECT * FROM items WHERE id = #{itemId}
+  </select>
+</mapper>

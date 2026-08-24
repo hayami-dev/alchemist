@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .DS_Store
+node_modules
+
+# Tailwind生成物
+src/main/resources/static/css/output.css
 
 ### STS ###
 .apt_generated
