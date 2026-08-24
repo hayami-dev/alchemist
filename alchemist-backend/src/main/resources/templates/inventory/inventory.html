@@ -21,8 +21,22 @@
           タブ2
         </button>
       </div>
-      <div id="tab1" class="js-tab-panel">タブ1の中身</div>
-      <div id="tab2" class="js-tab-panel hidden">タブ2の中身</div>
+      <div id="tab1" class="js-tab-panel">
+        <h2>MATERIAL ITEMS</h2>
+        <ul th:each="mi: ${materialItems}">
+          <div
+            th:replace="~{fragments/common/item-list :: itemList(${mi.item.name})}"
+          ></div>
+        </ul>
+      </div>
+      <div id="tab2" class="js-tab-panel hidden">
+        <h2>TOOL ITEMS</h2>
+        <ul th:each="ti: ${toolItems}">
+          <div
+            th:replace="~{fragments/common/item-list :: itemList(${ti.item.name})}"
+          ></div>
+        </ul>
+      </div>
       <script type="module" th:src="@{/js/inventory/inventory.js}"></script>
     </main>
   </body>
