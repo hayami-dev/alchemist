@@ -1,6 +1,5 @@
 /**
  * AlchemyServiceから分割した調合の計算に専念したサービス。
- * TODO: 設計書に追加
  */
 package com.example.app.service;
 
@@ -24,7 +23,6 @@ public class AlchemyCalculationService {
 
   // マテリアルアイテムの値を計算する。渡された計算のタイプによって
   // additionMaterial, multiplyMaterial, moduloMaterialいずれかを走らせる。
-  // TODO:設計書を修正
   public int calcMaterialValue(List<Long> materialIds, List<CalculationType> calcTypes) {
     // 素材一覧を作成
     List<Item> materials = new ArrayList<>();
@@ -65,13 +63,11 @@ public class AlchemyCalculationService {
   }
 
   // 調合結果のvalueが負の値だった場合、valueを正の値に変換して返す。
-  // TODO:設計書を修正
   public int normalizeToPositive(int itemValue) {
     return Math.abs(itemValue);
   }
 
   // MaterialItemからvalueを取り出す
-  // TODO:設計書に追加
   public int getValueOf(Item item) {
     if (item instanceof MaterialItem materialItem) {
       return materialItem.getValue();

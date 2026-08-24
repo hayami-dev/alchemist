@@ -2,7 +2,6 @@
  * 調合の実行に関するサービス。
  * アイテム、インベントリの取得および、
  * 調合に関する計算、バリデーションサービスのフィールドを保持する。
- * TODO: 設計書を修正
  */
 package com.example.app.service;
 
@@ -53,7 +52,6 @@ public class AlchemyService {
 
   // 調合を実行する。
   // 調合結果のアイテム情報をcontrollerへ返す。
-  // TODO:設計書を修正
   public Item craftItem(CraftRequest request, Long playerId) {
     List<Long> materialIds = request.getMaterialIds();
     List<CalculationType> calcTypes = request.getCalcTypes();
@@ -87,7 +85,6 @@ public class AlchemyService {
 
   // 調合方法を一覧を取得する。
   // インベントリをチェックし、該当アイテムによって返す値を調整する。
-  // TODO: 設計書に追加
   public List<CalculationType> getUnlockedCalcTypes(Long playerId) {
     List<InventoryItem> items = inventoryMapper.findAll(playerId);
 
@@ -109,7 +106,6 @@ public class AlchemyService {
   }
 
   // resultItemValueの値によって返すitemIdを計算する
-  // TODO:設計書に追加
   public Item getResultItem(int resultItemValue) {
     // resultItemValueが特殊な値だった場合の処理
     if (resultItemValue > MAX_VALID_VALUE) {
