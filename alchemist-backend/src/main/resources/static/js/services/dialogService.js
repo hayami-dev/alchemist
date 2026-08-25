@@ -7,6 +7,13 @@ export const DialogService = {
     } = options;
 
     const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`サーバーエラーが発生しました Status: ${response.status}`);
+      const errorHtml = await response.text();
+      console.error("エラーログ詳細(HTML):", errorHtml);
+      return;
+    }
+
     const html = await response.text();
 
     document.getElementById("dialogContent").innerHTML = html;

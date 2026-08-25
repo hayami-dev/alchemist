@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.app.domain.InventoryItem;
+import com.example.app.domain.Item;
 import com.example.app.domain.enums.ItemType;
+import com.example.app.mapper.ItemMapper;
 import com.example.app.service.InventoryService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/inventory")
@@ -22,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class InventoryController {
 
   private final InventoryService inventoryService;
+  private final ItemMapper itemMapper;
 
   private static final String VIEW_PREFIX = "inventory/";
   private static final Long DEBUG_PLAYER_ID = 1L;
@@ -51,4 +55,21 @@ public class InventoryController {
     model.addAttribute("toolItems", toolItems);
     return VIEW_PREFIX + "inventory";
   }
+
+  // アイテムメニューを表示するエンドポイント
+  // TODO:設計書反映
+  @GetMapping("/item-menu")
+  public String itemMenu(@RequestParam Long itemId, Model model) {
+    Item item = itemMapper.findById(itemId);
+    // item-nameへ渡す値を揃えるためInventoryItemでラップ
+    InventoryItem res = new InventoryItem();
+    res.setItem(item);
+    model.addAttribute("item", res);
+
+    if (item.getItemType() == ItemType.TOOL) {
+      model.addAttribute("isTool", true);
+    }
+    return "fragments/inventory/item-menu :: itemMenu";
+  }
+
 }
