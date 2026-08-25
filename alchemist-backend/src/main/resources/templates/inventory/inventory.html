@@ -23,19 +23,19 @@
       </div>
       <div id="tab1" class="js-tab-panel">
         <h2>MATERIAL ITEMS</h2>
-        <ul th:each="mi: ${materialItems}">
+        <div th:each="mi: ${materialItems}">
           <div
-            th:replace="~{fragments/common/item-list :: itemList(${mi.item.name})}"
+            th:replace="~{fragments/common/item-list :: itemList(${mi},${mi.quantity},null)}"
           ></div>
-        </ul>
+        </div>
       </div>
       <div id="tab2" class="js-tab-panel hidden">
         <h2>TOOL ITEMS</h2>
-        <ul th:each="ti: ${toolItems}">
+        <div th:each="ti: ${toolItems}">
           <div
-            th:replace="~{fragments/common/item-list :: itemList(${ti.item.name})}"
+            th:replace="~{fragments/common/item-list :: itemList(${ti},${ti.quantity},null)}"
           ></div>
-        </ul>
+        </div>
       </div>
       <script type="module" th:src="@{/js/inventory/inventory.js}"></script>
     </main>

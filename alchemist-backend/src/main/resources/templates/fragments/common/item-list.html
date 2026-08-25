@@ -3,35 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>アイテムリスト</title>
   </head>
   <body>
     <div
-      th:fragment="itemList(itemName)"
-      th:with="
-        p=${#ctx.containsVariable('price') ? price : null},
-        q=${#ctx.containsVariable('quantity') ? quantity : null}
-      "
-      class="flex gap-4 border-1 border-amber-800"
+      th:fragment="itemList(item,quantity,price)"
+      class="js-item-list-button flex gap-4 border-1 border-amber-800"
     >
-      <!-- TODO:アイテムネーム部分は別fragmentにするか検討 -->
-      <div class="flex flex-col gap-4">
-        <div class="flex gap-4">
-          <img src="" alt="item-icon" />
-          <p>[[${itemName}]]</p>
-        </div>
-        <div class="w-full hidden">
-          <p>
-            説明文 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
-            temporibus aliquid in modi repellat voluptatum odio corporis quae
-            doloremque explicabo. Enim delectus minus dicta. Molestias iusto
-            minima debitis dolorem velit?
-          </p>
-        </div>
-      </div>
-      <div class="flex gap-4" th:if="${p != null or q != null}">
-        <p th:if="${p != null}">[[${p}]] G</p>
-        <p th:if="${q != null}">×[[${q}]]</p>
+      <div
+        th:replace="~{fragments/common/item-name :: itemName(${item})}"
+      ></div>
+      <div class="flex gap-4" th:if="${price != null or quantity != null}">
+        <p th:if="${price != null}">[[${price}]] G</p>
+        <p th:if="${quantity != null}">×[[${quantity}]]</p>
       </div>
     </div>
   </body>
