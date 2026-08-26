@@ -19,7 +19,7 @@
             th:if="${slot.isCataloged}"
             class="col-auto border-1 border-amber-800"
           >
-            あああ
+            [[${slot.item.name}]]
           </li>
           <li
             th:if="${!slot.isCataloged}"

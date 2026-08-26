@@ -18,7 +18,7 @@ public interface CatalogMapper {
   public Set<Long> findCatalogedItemIds(Long playerId);
 
   // （枠、達成率表示のため）DBに存在するアイテムのリストを取得する。
-  @Select("SELECT id, itemType FROM items")
+  @Select("SELECT id, name, itemType FROM items")
   public List<Item> findAllItems();
 
   // 新規にアイテムを発見した際、カタログにINSERT登録する。
