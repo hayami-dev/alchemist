@@ -39,11 +39,7 @@ INSERT INTO `calculations` (`id`, `type`) VALUES
 
 -- ---------------------------------------------------------
 -- 05. items (アイテムマスタ) ※本番データ 全73件
--- ★要確認: id=8,28,29,30 の name が '71～80' '81～90' '91～100' のような
---   行範囲ラベル風の文字列になっており、他のアイテム名と明らかに毛色が違います。
---   コピペミスの可能性が高いため、正しいアイテム名を確認のうえ差し替えてください。
---   (このSQLでは原本の値をそのまま挿入しています)
--- 参考: id=39, 52 の name 末尾に半角/全角スペースが残っています。
+-- TODO: アイテム名見直し
 -- ---------------------------------------------------------
 INSERT INTO `items` (`id`, `name`, `itemType`, `rarities_id`, `star_rank`, `description`, `buy_price`, `sell_price`, `can_sell`, `value`, `efficiency`) VALUES
 (1, 'シープイヤー', 'MATERIAL', 1, 1, '煎じて飲むとスッと寝付ける。これを飲んでから寝よう。', 50, 12, 1, 8, NULL),
@@ -77,7 +73,7 @@ INSERT INTO `items` (`id`, `name`, `itemType`, `rarities_id`, `star_rank`, `desc
 (29, '81～90', 'MATERIAL', 3, 5, NULL, 1500, 450, 1, 90, NULL),
 (30, '91～100', 'MATERIAL', 3, 5, NULL, 2000, 500, 1, 100, NULL),
 (31, '宇宙卵の欠片', 'LOOK_ITEM', 4, 5, NULL, 9999, 4999, 1, 0, NULL),
-(32, '賢者の石', 'MATERIAL', 4, 5, '赤く怪しく輝く、錬金術の到達点。世界の理を書き換える力を持つ。', 9999, 4999, 1, 1, NULL),
+(32, '賢者の石', 'LOOK_ITEM', 4, 5, '赤く怪しく輝く、錬金術の到達点。世界の理を書き換える力を持つ。', 9999, 4999, 1, 1, NULL),
 (33, 'ネムリギの樹皮', 'MATERIAL', 4, 5, NULL, 8000, 4000, 1, 11, NULL),
 (34, 'ドラウムクヴェーデの詩片', 'MATERIAL', 4, 5, NULL, 8000, 4000, 1, 13, NULL),
 (35, 'オーディンの隻眼', 'MATERIAL', 4, 5, NULL, 8000, 4000, 1, 17, NULL),
@@ -113,12 +109,14 @@ INSERT INTO `items` (`id`, `name`, `itemType`, `rarities_id`, `star_rank`, `desc
 (65, '嫉妬の悪夢', 'LOOK_ITEM', 5, 5, NULL, 0, 0, 0, 84, NULL),
 (66, '最果ての断片', 'LOOK_ITEM', 5, 5, NULL, 0, 0, 0, 91, NULL),
 (67, '色欲の悪夢', 'LOOK_ITEM', 5, 5, NULL, 0, 0, 0, 98, NULL),
-(68, '黒こげの何か', 'LOOK_ITEM', 1, 1, NULL, 1, 1, 0, NULL, NULL), -- can_sellはTRUE
-(69, '古ぼけた錬金鍋', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL),
-(70, '清涼のふいご', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL),
-(71, '蒸留器', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL),
-(72, 'ハサミ', 'TOOL', NULL, NULL, '1段階前のアイテムに変化させる', 800, 200, 1, NULL, -10),
-(73, '星屑の聖水', 'TOOL', NULL, NULL, '7の倍数のアイテムを-1して救済する', 1000, 250, 1, NULL, -1);
+(68, '黒こげの何か', 'LOOK_ITEM', 1, 1, NULL, 1, 1, 0, NULL, NULL); -- can_sellはTRUE
+
+INSERT INTO `items` (`id`, `name`, `itemType`, `rarities_id`, `star_rank`, `description`, `buy_price`, `sell_price`, `can_sell`, `value`, `efficiency`,`tool_effect_type`) VALUES
+(69, '古ぼけた錬金鍋', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 'UNLOCK_ADD'),
+(70, '清涼のふいご', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 'UNLOCK_MULTIPLY'),
+(71, '蒸留器', 'TOOL', NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 'UNLOCK_MODULO'),
+(72, 'ハサミ', 'TOOL', NULL, NULL, '1段階前のアイテムに変化させる', 800, 200, 1, NULL, -10, NULL),
+(73, '星屑の聖水', 'TOOL', NULL, NULL, '7の倍数のアイテムを-1して救済する', 1000, 250, 1, NULL, -1, NULL);
 
 -- ---------------------------------------------------------
 -- 06. diaries (日記マスタ) ※サンプルデータのみ(10件)

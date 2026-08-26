@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap");
+
+@import "tailwindcss";
+
+@layer base {
+  * {
+    font-family: "Kaisei Decol", sans-serif;
+    color: #3a3030;
+  }
+
+  main {
+    flex-grow: 1;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  --spacing-icon-sm: 40px;
+  --spacing-icon-md: 72px;
+  --spacing-icon-lg: 104px;
+}

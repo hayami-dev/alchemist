@@ -10,7 +10,8 @@
         "vscjava.vscode-java-pack",
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-spring-boot-tools",
-        "vscjava.vscode-lombok"
+        "vscjava.vscode-lombok",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   },
@@ -19,6 +20,9 @@
       "version": "none",
       "installMaven": "true",
       "installGradle": "false"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
     }
   },
   "forwardPorts": [
