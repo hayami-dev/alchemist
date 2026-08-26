@@ -26,8 +26,16 @@ public class CatalogController {
   @GetMapping
   public String showCatalog(HttpSession session, Long playerId, Model model) {
 
+    // レシピ画面に枠と中身を表示する
     List<CatalogSlot> slots = catalogService.getPlayerCatalog(DEBUG_PLAYER_ID);
+
+    // TODO:playersテーブルからレシピ解放達成率を取得する
+    // →今はService から直接計算を行い表示する
+    int completionRate = catalogService.getProgressRate(slots);
+
     model.addAttribute("slots", slots);
+    model.addAttribute("completionRate", completionRate);
+
     return VIEW_PREFIX + "catalog";
   }
 }

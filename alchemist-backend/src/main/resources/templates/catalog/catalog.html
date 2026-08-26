@@ -13,22 +13,32 @@
   <body>
     <main layout:fragment="content">
       <h1>レシピ</h1>
-      <ul class="grid grid-cols-6 gap-2">
-        <th:block th:each="slot: ${slots}">
-          <li
-            th:if="${slot.isCataloged}"
-            class="col-auto border-1 border-amber-800"
-          >
-            [[${slot.item.name}]]
-          </li>
-          <li
-            th:if="${!slot.isCataloged}"
-            class="col-auto border-1 border-amber-800"
-          >
-            ？？？
-          </li>
-        </th:block>
-      </ul>
+      <div class="grid grid-cols-12 gap-4">
+        <!-- アイテムカラム -->
+        <div class="col-span-10">
+          <ul class="grid grid-cols-6 gap-2">
+            <th:block th:each="slot: ${slots}">
+              <li
+                th:if="${slot.isCataloged}"
+                class="col-auto border border-amber-800"
+              >
+                [[${slot.item.name}]]
+              </li>
+              <li
+                th:if="${!slot.isCataloged}"
+                class="col-auto border border-amber-800"
+              >
+                ？？？
+              </li>
+            </th:block>
+          </ul>
+        </div>
+        <!-- 達成率 -->
+        <div class="col-span-2">
+          <p>達成率</p>
+          <p>[[${completionRate}]]%</p>
+        </div>
+      </div>
     </main>
   </body>
 </html>

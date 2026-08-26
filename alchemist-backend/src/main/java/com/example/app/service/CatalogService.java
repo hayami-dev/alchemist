@@ -21,8 +21,6 @@ public class CatalogService {
   private final ItemMapper itemMapper;
   private final AlchemyService alchemyService;
 
-  //
-
   // プレイヤーのカタログ一覧を取得する。
   public List<CatalogSlot> getPlayerCatalog(Long playerId) {
     // itemIdとitemTypeを取得
@@ -34,5 +32,22 @@ public class CatalogService {
     return allItems.stream()
         .map(item -> new CatalogSlot(item, catalogedItemIds.contains(item.getId())))
         .toList();
+  }
+
+  // カタログの解放率を計算して返す。
+  // TODO:設計書に追記
+  public int getProgressRate(List<CatalogSlot> slots) {
+    if (slots == null || slots.isEmpty()) {
+      return 0;
+    }
+
+    // 解禁済み（isCataloged == true）の件数をカウント[cite: 3]
+    long catalogedCount = slots.stream()
+        .filter(slot -> slot != null && slot.isCataloged()) // null チェックも含められる
+        .count();
+
+    // 四捨五入して int 型で返却（Math.round を使用）
+    double rate = ((double) catalogedCount / slots.size()) * 100;
+    return (int) Math.round(rate);
   }
 }
