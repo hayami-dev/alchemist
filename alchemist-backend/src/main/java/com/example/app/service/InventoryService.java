@@ -32,15 +32,32 @@ public class InventoryService {
     return false;
   }
 
+  /* TODO:以下設計書と付け合せすること */
   // カバンにアイテムを追加。新規発見ならcatalogService.addCatalogも自動で叩く。
   // TODO: これってService…？Controllerでは……
-  void addItem(Long playerId, Long itemId, int qty) {
+  public void addItem(Long playerId, Long itemId, int qty) {
+    InventoryItem existing = inventoryMapper.findByPlayerAndItem(playerId, itemId);
+    if (existing != null) {
+      inventoryMapper.updateQuantity(playerId, itemId, existing.getQuantity() + qty);
+    } else {
+      inventoryMapper.insertInventoryItem(playerId, itemId, qty);
+    }
   }
 
   // 調合、売却、捨てるなどでアイテムを消費する。
   // 数量が0以下になれば自動でdeleteItemを呼ぶ。
-  void consumeItem(Long playerId, Long itemId, int qty) {
-
+  // アイテムを消費する。数量が0以下になったら削除する。
+  public void consumeItem(Long playerId, Long itemId, int qty) {
+    InventoryItem existing = inventoryMapper.findByPlayerAndItem(playerId, itemId);
+    if (existing == null) {
+      throw new IllegalStateException("消費対象のアイテムがインベントリにありません。itemId=" + itemId);
+    }
+    int remaining = existing.getQuantity() - qty;
+    if (remaining <= 0) {
+      inventoryMapper.deleteInventoryItem(playerId, itemId);
+    } else {
+      inventoryMapper.updateQuantity(playerId, itemId, remaining);
+    }
   }
 
   // インベントリからアイテムを削除する。
