@@ -292,6 +292,22 @@ h1 {
     }
   }
 
+  /* ひし形ボタン内の調合方法ラベル（なべ・ふいご・蒸留器） */
+  .pixel-calc-icon-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 1.1;
+
+    /* 3〜4文字の日本語ラベルが収まるよう、文字サイズと字間を専用に上書き */
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
   /* ドット枠・半透明背景の閉じる（✖）ボタン */
   .pixel-btn-close {
     display: inline-flex;
