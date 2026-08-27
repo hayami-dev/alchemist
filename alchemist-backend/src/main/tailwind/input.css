@@ -24,6 +24,7 @@ body {
   justify-content: space-between;
   /* 重ねたい色を指定 */
   background-color: rgba(255, 255, 255, 0.3);
+  background-attachment: fixed;
 
   /* 合成モードの指定（multiply: 乗算、overlay: オーバーレイ など） */
   background-blend-mode: soft-light;
