@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".js-calc-slot-button").forEach((button) => {
     button.addEventListener("click", (event) => {
-      currentTargetCalcSlot = event.target.dataset.slotNum;
+      currentTargetCalcSlot = event.currentTarget.dataset.slotNum;
       DialogService.openWithContent("/alchemy/calc-picker");
     });
   });
@@ -165,6 +165,7 @@ const renderCalcSlots = () => {
     const slotButton = document.querySelector(
       `.js-calc-slot-button[data-slot-num="${slotNum}"]`,
     );
+    console.log("slotButton:", slotButton);
     const calcType = selectedCalcs[slotNum];
 
     // スロット内の全アイコンを非表示

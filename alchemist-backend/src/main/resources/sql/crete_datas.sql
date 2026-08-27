@@ -142,6 +142,11 @@ INSERT INTO `inventories` (`id`, `player_id`, `item_id`, `quantity`) VALUES
 (3, 1, 3, 3),
 (4, 1, 5, 1);
 
+INSERT INTO inventories (player_id, item_id, quantity) VALUES
+(1, 69, 1),
+(1, 70, 1),
+(1, 71, 1);
+
 -- ---------------------------------------------------------
 -- 08. recipes (レシピ) ※サンプルデータのみ
 -- ---------------------------------------------------------

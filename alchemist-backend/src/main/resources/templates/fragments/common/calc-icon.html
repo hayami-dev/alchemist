@@ -8,14 +8,14 @@
   <body>
     <div
       th:fragment="calcIcon(calcType,class)"
-      th:with="Calc=${T(com.example.app.domain.enums.CalculationType)}, cssClass=${class ?: 'size-4'}"
-      class="js-calc-icon"
+      th:with="Calc=${T(com.example.app.domain.enums.CalculationType)}, cssClass=${class ?: ''}"
+      class="js-calc-icon pixel-calc-icon-label"
       th:classappend="${cssClass}"
       th:attr="data-calc-type=${calcType}"
     >
-      <span th:if="${calcType == Calc.ADD}">＋</span>
-      <span th:if="${calcType == Calc.MULTIPLY}">✕</span>
-      <span th:if="${calcType == Calc.MODULO}">％</span>
+      <span th:if="${calcType == Calc.ADD}">なべ</span>
+      <span th:if="${calcType == Calc.MULTIPLY}">ふいご</span>
+      <span th:if="${calcType == Calc.MODULO}">蒸留器</span>
     </div>
   </body>
 </html>
