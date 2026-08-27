@@ -171,3 +171,13 @@ INSERT INTO `unlocked_diaries` (`id`, `player_id`, `diary_id`, `unlocked_at`) VA
 (1, 1, 1, '2026-07-14 15:10:00');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- 手動でInventoriesとcatalogsを一致させる。
+INSERT INTO catalogs (player_id, item_id, unlocked_at)
+SELECT player_id, item_id, NOW()
+FROM inventories
+WHERE NOT EXISTS (
+  SELECT 1 FROM catalogs
+  WHERE catalogs.player_id = inventories.player_id
+    AND catalogs.item_id = inventories.item_id
+);
