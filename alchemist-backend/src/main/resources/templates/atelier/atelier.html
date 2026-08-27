@@ -10,11 +10,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>アトリエ</title>
   </head>
-  <body>
-    <main layout:fragment="content" class="flex gap-6">
-      <a href="">日記（未実装）</a>
-      <a th:href="@{/alchemy}">調合する</a>
-      <a href="">設定（未実装）</a>
+  <body class="page-atelier">
+    <main layout:fragment="content" class="flex flex-col items-center gap-6">
+      <h1 class="text-center">
+        <img
+          th:src="@{/images/logo-full.png}"
+          alt="logo"
+          class="w-[600px] drop-shadow-2xl"
+        />
+      </h1>
+      <p class="text-white text-center text-shadow-2xs">
+        ここは不思議な魔法の世界です。<br />
+        あなたはみんなの『夢』をつくる錬金術師。<br />
+        さぁ、調合台へ向かって、新たな『夢』を調合しましょう。
+      </p>
+      <!-- <a href="">日記（未実装）</a> -->
+      <button
+        type="button"
+        class="pixel-btn-circle-purple absolute bottom-8 left-1/2 -translate-1/2"
+        th:onclick="|location.href='@{/alchemy}'|"
+      >
+        <span>調合台へ<br />向かう</span>
+      </button>
+      <!-- <a href="">設定（未実装）</a> -->
     </main>
   </body>
 </html>

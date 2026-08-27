@@ -11,13 +11,13 @@
     <title>調合台</title>
   </head>
 
-  <body>
+  <body class="page-alchemy">
     <main layout:fragment="content">
-      <section class="flex flex-col gap-4 items-center">
+      <section class="flex flex-col gap-8 items-center">
         <h1 class="text-2xl font-bold">調合</h1>
         <p>素材を2つ以上選んでください。</p>
-        <form class="flex flex-col gap-4 items-center">
-          <div class="flex gap-6 items-center p-6 justify-center">
+        <form class="flex flex-col gap-12 items-center">
+          <div class="flex gap-8 items-center p-6 justify-between">
             <div
               th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
             ></div>
@@ -30,12 +30,16 @@
             <div
               th:replace="~{fragments/alchemy/calc-slot :: calcSlot(2, ${defaultCalcType}, ${allCalcTypes})}"
             ></div>
-            <div>
+            <div class="relative">
               <div
                 th:replace="~{fragments/alchemy/material-slot :: materialSlot(3)}"
               ></div>
-              <button type="button" id="js-clear-materials-button">
-                素材3をクリア
+              <button
+                type="button"
+                id="js-clear-materials-button"
+                class="pixel-btn-close absolute top-[-15%] right-[-15%] z-[99]"
+              >
+                <span class="pixel-icon-x"></span>
               </button>
             </div>
           </div>

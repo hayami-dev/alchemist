@@ -10,31 +10,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>バッグ</title>
   </head>
-  <body>
-    <main layout:fragment="content">
+  <body class="page-atelier">
+    <main layout:fragment="content" class="flex flex-col gap-8 items-center">
       <h1>バッグ</h1>
-      <div class="flex gap-2">
-        <button type="button" class="js-tab-button" data-tab-target="tab1">
-          タブ1
-        </button>
-        <button type="button" class="js-tab-button" data-tab-target="tab2">
-          タブ2
-        </button>
-      </div>
-      <div id="tab1" class="js-tab-panel">
-        <h2>MATERIAL ITEMS</h2>
-        <div th:each="mi: ${materialItems}">
-          <div
-            th:replace="~{fragments/common/item-list :: itemList(${mi},${mi.quantity},null)}"
-          ></div>
+      <div class="w-full">
+        <div class="flex">
+          <button
+            type="button"
+            class="js-tab-button pixel-tab-button is-active"
+            data-tab-target="tab1"
+          >
+            MATERIAL
+          </button>
+          <button
+            type="button"
+            class="js-tab-button pixel-tab-button"
+            data-tab-target="tab2"
+          >
+            TOOL
+          </button>
         </div>
-      </div>
-      <div id="tab2" class="js-tab-panel hidden">
-        <h2>TOOL ITEMS</h2>
-        <div th:each="ti: ${toolItems}">
-          <div
-            th:replace="~{fragments/common/item-list :: itemList(${ti},${ti.quantity},null)}"
-          ></div>
+        <div id="tab1" class="js-tab-panel pixel-tab-panel">
+          <h2>MATERIAL ITEMS</h2>
+          <div th:each="mi: ${materialItems}">
+            <div
+              th:replace="~{fragments/common/item-list :: itemList(${mi},${mi.quantity},null)}"
+            ></div>
+          </div>
+        </div>
+        <div id="tab2" class="js-tab-panel pixel-tab-panel hidden">
+          <h2>TOOL ITEMS</h2>
+          <div th:each="ti: ${toolItems}">
+            <div
+              th:replace="~{fragments/common/item-list :: itemList(${ti},${ti.quantity},null)}"
+            ></div>
+          </div>
         </div>
       </div>
       <script type="module" th:src="@{/js/inventory/inventory.js}"></script>

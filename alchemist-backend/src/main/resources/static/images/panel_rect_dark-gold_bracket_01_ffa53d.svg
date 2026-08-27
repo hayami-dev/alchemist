@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><defs>
+    <linearGradient id="bd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8A048"/>
+      <stop offset="50%" stop-color="#907020"/>
+      <stop offset="100%" stop-color="#504000"/>
+    </linearGradient>
+  <filter id="tint" color-interpolation-filters="sRGB"><feFlood flood-color="#ffa53d" result="flood"/><feBlend mode="multiply" in="SourceGraphic" in2="flood" result="blend"/><feComposite in="blend" in2="SourceGraphic" operator="in"/></filter></defs><g filter="url(#tint)">
+  
+  <!-- Body (flat solid) -->
+  <rect x="6" y="6" width="244" height="244" fill="#2A2A30"/>
+  <!-- Top-left bracket -->
+  <path d="M4,22 V4 H22 V7 H7 V22 Z" fill="url(#bd)"/>
+  <!-- Top-right bracket -->
+  <path d="M234,4 H252 V22 H249 V7 H234 Z" fill="url(#bd)"/>
+  <!-- Bottom-left bracket -->
+  <path d="M4,234 V252 H22 V249 H7 V234 Z" fill="url(#bd)"/>
+  <!-- Bottom-right bracket -->
+  <path d="M252,234 V252 H234 V249 H249 V234 Z" fill="url(#bd)"/>
+</g></svg>

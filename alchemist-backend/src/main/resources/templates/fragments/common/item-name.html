@@ -6,12 +6,13 @@
     <title>アイテムネーム</title>
   </head>
   <body>
-    <div th:fragment="itemName(targetItem)" class="flex flex-col gap-4">
-      <div class="flex gap-4">
-        <img src="" alt="item-icon" />
-        <p>[[${targetItem.item.name}]]</p>
+    <div th:fragment="itemName(targetItem)" class="pixel-item-name-box">
+      <div class="pixel-item-header">
+        <!-- <img src="" alt="item-icon" class="pixel-item-icon" /> -->
+        <span class="text-2xl">🌿</span>
+        <p class="pixel-item-title">[[${targetItem.item.name}]]</p>
       </div>
-      <div class="w-full hidden">
+      <div class="w-full hidden pixel-item-desc">
         <p>
           説明文 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
           temporibus aliquid in modi repellat voluptatum odio corporis quae
