@@ -6,20 +6,50 @@
     <title>Document</title>
   </head>
   <body>
-    <header th:fragment="header" class="flex gap-6">
+    <header
+      th:fragment="header"
+      class="flex items-center gap-6 justify-between py-4 px-8"
+    >
       <div>
-        <h1>
-          <a href="/"><img src="" alt="logo" /></a>
-        </h1>
+        <button
+          class="pixel-btn-circle-orange text-xs"
+          th:onclick="|location.href='@{/}'|"
+        >
+          <span class="p-2"> ホームへ </span>
+        </button>
       </div>
-      <div>1000 G</div>
+      <!-- TODO:所持ゴールドの実装 -->
+      <!-- <div>1000 G</div> -->
       <div>
-        <nav>
-          <ul class="flex gap-4">
-            <li><a th:href="@{/catalog}">レシピ</a></li>
-            <li><a th:href="@{/inventory}">バッグ</a></li>
-            <li><a href="">ショップ（未実装）</a></li>
-          </ul>
+        <nav class="flex gap-8">
+          <!-- レシピボタン -->
+          <button
+            type="button"
+            class="pixel-btn-capsule-cream relative pl-8 pr-6"
+            th:onclick="|location.href='@{/catalog}'|"
+          >
+            <img
+              th:src="@{/images/recipe-nav.png}"
+              alt="レシピ"
+              class="absolute w-[50px] top-1/2 -translate-y-1/2 left-[-10px] z-[10] pointer-events-none"
+            />
+            <span>レシピ</span>
+          </button>
+
+          <!-- バッグボタン -->
+          <button
+            type="button"
+            class="pixel-btn-capsule-cream relative pl-10 pr-6"
+            th:onclick="|location.href='@{/inventory}'|"
+          >
+            <img
+              th:src="@{/images/bag-nav.png}"
+              alt="バッグ"
+              class="absolute w-[50px] top-1/2 -translate-y-1/2 left-[-10px] z-[10] pointer-events-none"
+            />
+            <span>バッグ</span>
+          </button>
+          <!-- TODO:ショップの実装 -->
         </nav>
       </div>
     </header>

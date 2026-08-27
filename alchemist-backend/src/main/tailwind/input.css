@@ -1,24 +1,536 @@
-@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
 
 @import "tailwindcss";
 
 @layer base {
   * {
-    font-family: "Kaisei Decol", sans-serif;
-    color: #3a3030;
-  }
-
-  main {
-    flex-grow: 1;
-  }
-
-  button:hover {
-    cursor: pointer;
+    font-family: "DotGothic16", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 3px;
   }
 }
 
+/* 共通の背景設定 */
+body {
+  color: #3a3030;
+  background-color: #e0d8d8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  /* 重ねたい色を指定 */
+  background-color: rgba(255, 255, 255, 0.3);
+
+  /* 合成モードの指定（multiply: 乗算、overlay: オーバーレイ など） */
+  background-blend-mode: soft-light;
+}
+
+/* アトリエ（レシピ、バッグ）画面の背景 */
+body.page-atelier {
+  background-image: url("/images/atelier-bg.png");
+}
+
+/* 調合画面の背景 */
+body.page-alchemy {
+  background-image: url("/images/alchemy-bg.png");
+}
+
+main {
+  flex-grow: 1;
+  padding: 24px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 38px;
+}
+
 @theme {
-  --spacing-icon-sm: 40px;
-  --spacing-icon-md: 72px;
-  --spacing-icon-lg: 104px;
+  --spacing-icon-sm: 52px;
+  --spacing-icon-md: 84px;
+  --spacing-icon-lg: 108px;
+}
+
+/* 1. 変数を定義する（プロジェクト全体で使い回せる） */
+:root {
+  --pixel-shadow: rgba(32, 32, 30, 1);
+  --text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+@layer components {
+  /* 楕円・金枠・青紫グラデーション＋ツヤ追加のピクセルボタン */
+  .pixel-btn-oval-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 2.5rem;
+    color: #ffffff;
+    text-shadow: var(--text-shadow);
+    font-size: 32px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    border-radius: 999px;
+
+    /* 背景：上部にツヤ（半透明の白光沢）を載せた青紫グラデーション */
+    background:
+      /* ① 上部〜中央にかかる楕円状のツヤ（ハイライト） */
+      radial-gradient(
+        ellipse at 50% 25%,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 255, 255, 0) 65%
+      ),
+      /* ② 土台の青から紫への縦グラデーション */
+        linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+
+    /* 金色のメイン枠線 */
+    border: 3px solid #f59e0b;
+
+    box-shadow:
+      /* 内側のくっきりした白いラインツヤ（上部縁） */
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+      /* 内側底面の影（立体感強化） */ inset 0 -3px 0 0 #b45309,
+      /* 外側のダークゴールド枠 */ 0 0 0 2px #d97706,
+      /* 最外側の黒40%枠＆落ち影 */ 0 0 0 4px var(--pixel-shadow),
+      0 4px 0 2px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* ホバー時 */
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    /* クリック（押下）時 */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
+        inset 0 -2px 0 0 #b45309,
+        0 0 0 2px #d97706,
+        0 0 0 4px var(--pixel-shadow),
+        0 2px 0 2px var(--pixel-shadow);
+    }
+  }
+
+  /* 明るめナチュラルグリーンの楕円ピクセルボタン */
+  .pixel-btn-oval-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 2rem;
+    color: #ffffff; /* パッと映える白文字に変更 */
+    text-shadow: var(--text-shadow);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    border-radius: 999px;
+
+    /* 背景：より明るく鮮やかなグリーン感（#a3e635 → #34d399 / #10b981） */
+    background:
+      radial-gradient(
+        ellipse at 50% 25%,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0) 65%
+      ),
+      linear-gradient(180deg, #78d89b 0%, #34d399 50%, #059669 100%);
+
+    /* 枠線：明瞭な明るいグリーン枠 */
+    border: 3px solid #10b981;
+
+    box-shadow:
+      /* 内側の白ハイライト */
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.5),
+      /* 内側の影（締め色） */ inset 0 -2px 0 0 #047857,
+      /* 外側の締め枠 */ 0 0 0 2px #065f46,
+      /* 最外側の黒40%枠＆落ち影 */ 0 0 0 4px var(--pixel-shadow),
+      0 3px 0 2px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* ホバー時（明るくツヤを強調） */
+    &:hover {
+      filter: brightness(1.08);
+    }
+
+    /* クリック（押下）時 */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.5),
+        inset 0 -1px 0 0 #047857,
+        0 0 0 2px #065f46,
+        0 0 0 4px var(--pixel-shadow),
+        0 1px 0 2px var(--pixel-shadow);
+    }
+  }
+
+  /* オレンジ/ゴールド枠＋ダークブラウンのピクセルUIボタン */
+  .pixel-btn-orange-frame {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: #ffffff;
+
+    /* 文字が見やすいようにテキストシャドウ */
+    text-shadow: var(--text-shadow);
+
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    /* 角の丸みをドット風に表現するための角丸指定 */
+    border-radius: 12px;
+
+    /* 中央背景：濃いブラウンのグラデーション（上部は明るい光沢、下部は暗いベース） */
+    background: linear-gradient(180deg, #5c3826 0%, #3d2316 45%, #24130b 100%);
+
+    /* 1. 一番内側の枠（暗い茶色の境界） */
+    border: 3px solid #1c0e08;
+
+    /* 2. 多重の枠線と光沢感（外側のオレンジ/ゴールド枠） */
+    box-shadow:
+      /* 内側のつや/グラデーション感（上部のうっすらしたハイライト） */
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.15),
+      /* メインのオレンジ/ゴールド外枠 */ 0 0 0 3px #f97316,
+      /* 明るいオレンジ */ 0 0 0 6px #ea580c,
+      /* 濃いオレンジ */ 0 0 0 8px #9a3412,
+      /* ダークオレンジ/ブラウン境界 */ /* ドット外枠＆落ち影 */ 0 0 0 10px
+        var(--pixel-shadow),
+      0 4px 0 10px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* ホバー時（枠線と全体を明るく） */
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    /* クリック（押下）時：凹むアニメーション */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.15),
+        0 0 0 3px #f97316,
+        0 0 0 6px #ea580c,
+        0 0 0 8px #9a3412,
+        0 0 0 10px var(--pixel-shadow),
+        0 2px 0 10px var(--pixel-shadow); /* 影を小さくして押された感を表現 */
+    }
+  }
+
+  /* ひし形ティールグリーンのピクセルUIボタン */
+  .pixel-btn-diamond-teal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    /* 1. 正方形を45度回転させてひし形にする */
+    transform: rotate(45deg);
+
+    /* 背景：明るいエメラルド〜ティールグリーンのグラデーション */
+    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+
+    /* ダークティールの太い枠線（ピクセル風のクッキリしたエッジ） */
+    border: 4px solid #064e3b;
+
+    /* 外枠の黒縁（透明度40%） ＋ 右上ツヤのドット表現 */
+    box-shadow:
+      /* 右上のハイライト（ツヤ感） */
+      inset -3px 3px 0 0 rgba(255, 255, 255, 0.4),
+      /* 外枠の黒ピクセル線 */ 0 0 0 2px var(--pixel-shadow),
+      /* 真下への落ち影（回転軸に対して右下に打ち出すことで見た目上「真下」になります） */
+        2px 2px 0 1px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* 中のテキストやアイコン（回転を元に戻す設定） */
+    & > * {
+      transform: rotate(-45deg);
+      color: #ffffff;
+      text-shadow: var(--text-shadow);
+    }
+
+    /* ホバー時（少し明るく） */
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    /* クリック（押下）時：凹みアニメーション */
+    &:active {
+      /* 見た目上まっすぐ下に沈むよう、X方向とY方向（45度軸）に均等に移動 */
+      transform: rotate(45deg) translate(2px, 2px);
+      box-shadow:
+        inset -3px 3px 0 0 rgba(255, 255, 255, 0.4),
+        0 0 0 1px var(--pixel-shadow),
+        1px 1px 0 1px var(--pixel-shadow);
+    }
+  }
+
+  /* ドット枠・半透明背景の閉じる（✖）ボタン */
+  .pixel-btn-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    /* 背景：黒の50%半透明 */
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* ドット風の角・枠線（変数の黒40%を使用） */
+    box-shadow:
+      /* 内側のうっすらとした白ハイライト */
+      inset 0 0 0 2px rgba(255, 255, 255, 0.2),
+      /* ドット風のカクカク外枠 */ -2px 0 0 0 var(--pixel-shadow),
+      2px 0 0 0 var(--pixel-shadow),
+      0 -2px 0 0 var(--pixel-shadow),
+      0 2px 0 0 var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      filter 0.05s,
+      transform 0.05s;
+  }
+
+  /* ホバー時（背景を少し濃くする） */
+  .pixel-btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* クリック時 */
+  .pixel-btn-close:active {
+    transform: translateY(1px);
+  }
+
+  /* ==========================================
+     CSSで作るピクセル風「✖」アイコン
+     ========================================== */
+  .pixel-icon-x {
+    width: 4px;
+    height: 4px;
+    background-color: #ffffff; /* 中央のドット */
+    position: relative;
+
+    /* 中央の1ドットを中心に、box-shadowで「✖」の対角線を打つ */
+    box-shadow:
+      /* 左上〜右下の対角ドット */
+      -4px -4px 0 0 #ffffff,
+      -8px -8px 0 0 #ffffff,
+      4px 4px 0 0 #ffffff,
+      8px 8px 0 0 #ffffff,
+      /* 右上〜左下の対角ドット */ 4px -4px 0 0 #ffffff,
+      8px -8px 0 0 #ffffff,
+      -4px 4px 0 0 #ffffff,
+      -8px 8px 0 0 #ffffff;
+  }
+
+  /* 画像参考：カプセル型・クリーム背景＋ブラウン枠のメニューボタン */
+  .pixel-btn-capsule-cream {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 2.5rem;
+    min-width: 160px;
+    color: #4a2e18; /* ダークブラウンの文字色 */
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.6); /* 文字を見やすくする明るい影 */
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    /* 横長カプセル（完全な楕円）の形状 */
+    border-radius: 999px;
+
+    /* 背景：上部にハイライトが入ったクリーム色のグラデーション */
+    background:
+      /* 上部〜中央にかかるカプセル状の白いツヤ感（画像再現） */
+      radial-gradient(
+        ellipse at 50% 30%,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0) 70%
+      ),
+      /* 土台のクリーム色グラデーション（上が明るく下が少し濃い） */
+        linear-gradient(180deg, #fffbeb 0%, #fef3c7 60%, #fde68a 100%);
+
+    /* メインのブラウン枠線 */
+    border: 3px solid #b35621;
+
+    box-shadow:
+      /* 内側のくっきりした白ラインツヤ（上部縁） */
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+      /* 内側底面の立体感（薄いブラウンの影） */ inset 0 -2px 0 0 #d97706,
+      /* 最外側の黒40%枠線 ＋ 真下へのスリム落ち影 */ 0 0 0 2px
+        var(--pixel-shadow),
+      0 2px 0 2px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+  }
+
+  /* ホバー時 */
+  .pixel-btn-capsule-cream:hover {
+    filter: brightness(1.05);
+  }
+
+  /* クリック（押下）時 */
+  .pixel-btn-capsule-cream:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 0 #d97706,
+      0 0 0 2px var(--pixel-shadow),
+      0 1px 0 2px var(--pixel-shadow);
+  }
+
+  /* ゴールド枠×青紫グラデーションの丸型ピクセルUIボタン */
+  .pixel-btn-circle-purple {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    /* 完全な円形 */
+    border-radius: 50%;
+
+    /* 中央背景：楕円ツヤ＋上から下への「青→紫」グラデーション（oval-goldと完全一致） */
+    background:
+      radial-gradient(
+        ellipse at 50% 25%,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 255, 255, 0) 65%
+      ),
+      linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+
+    /* メインのゴールド枠線（#f59e0b） */
+    border: 3px solid #f59e0b;
+
+    /* 多重のゴールド・オレンジ金属フレーム＋黒枠＆落ち影 */
+    box-shadow:
+      /* 内側上部のくっきりした白ハイライト */
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+      /* 内側底面の影（立体感強化） */ inset 0 -3px 0 0 #b45309,
+      /* 外側のダークゴールド枠 */ 0 0 0 2px #d97706,
+      /* 最外側の黒40%枠線（変数使用） */ 0 0 0 5px var(--pixel-shadow),
+      /* 真下への落ち影 */ 0 3px 0 5px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* テキスト・アイコンの設定 */
+    & > * {
+      font-size: 28px;
+      color: #ffffff;
+      text-shadow: var(--text-shadow);
+    }
+
+    /* ホバー時 */
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    /* クリック（押下）時：真下に押し込む */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
+        inset 0 -2px 0 0 #b45309,
+        0 0 0 2px #d97706,
+        0 0 0 5px var(--pixel-shadow),
+        0 1px 0 5px var(--pixel-shadow);
+    }
+  }
+
+  /* ゴールド/オレンジ丸型フレーム＋ダークブラウンのピクセルUIボタン */
+  .pixel-btn-circle-orange {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    /* 完全な円形 */
+    border-radius: 50%;
+    /* 中央背景：濃いブラウン（中央上部のドーム状の丸い光沢と下部の影） */
+    background: radial-gradient(
+      circle at 50% 35%,
+      #6e432d 0%,
+      #3d2316 55%,
+      #1f0f08 100%
+    );
+    /* 一番内側の境界線（ダークブラウン） */
+    border: 3px solid #1c0e08;
+    /* 多重のゴールド〜オレンジ金属フレーム＋落ち影（黒40%変数） */
+    box-shadow:
+      /* 内側上部のドーム光沢ハイライト */
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.25),
+      /* 金色・オレンジのフレーム層 */ 0 0 0 2px #fbbf24,
+      /* 明るいゴールド内枠 */ 0 0 0 5px #f97316,
+      /* メインオレンジ */ 0 0 0 7px #b45309,
+      /* 濃いゴールド/ブラウン境界 */ /* 外枠の黒ピクセル線（変数使用） */ 0 0 0
+        8px var(--pixel-shadow),
+      /* 真下への落ち影（スリム指定） */ 0 3px 0 8px var(--pixel-shadow);
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* テキスト・アイコンの設定 */
+    & > * {
+      color: #ffffff;
+      text-shadow: 1px 1px 0px var(--pixel-shadow);
+    }
+
+    /* ホバー時 */
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    /* クリック（押下）時：真下に押し込む */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 3px 0 0 rgba(255, 255, 255, 0.25),
+        0 0 0 2px #fbbf24,
+        0 0 0 5px #f97316,
+        0 0 0 7px #b45309,
+        0 0 0 8px var(--pixel-shadow),
+        0 1px 0 8px var(--pixel-shadow); /* 影を小さくして沈み込み表現 */
+    }
+  }
 }
