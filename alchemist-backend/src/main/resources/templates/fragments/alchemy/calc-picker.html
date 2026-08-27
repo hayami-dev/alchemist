@@ -6,14 +6,14 @@
     <title>調合方法のピッカー</title>
   </head>
   <body>
-    <div th:fragment="calcPicker">
-      <ul>
+    <div th:fragment="calcPicker" class="pixel-dialog-content">
+      <ul class="pixel-dialog-icon-grid">
         <th:block th:each="calcType : ${unlockedCalcTypes}">
           <li>
             <button
               type="button"
               th:data-calc-type="${calcType}"
-              class="js-calc-picker-button"
+              class="js-calc-picker-button pixel-dialog-icon-btn"
             >
               <div
                 th:replace="~{fragments/common/calc-icon :: calcIcon(${calcType},'')}"

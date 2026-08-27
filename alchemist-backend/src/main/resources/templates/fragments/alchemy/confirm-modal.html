@@ -6,9 +6,11 @@
     <title>Document</title>
   </head>
   <body>
-    <div th:fragment="confirmModal">
-      <p>この素材を消費します。よろしいですか？</p>
-      <ul id="confirmMaterialList"></ul>
+    <div th:fragment="confirmModal" class="pixel-dialog-content">
+      <p class="pixel-dialog-message">
+        この素材を消費します。<br />よろしいですか？
+      </p>
+      <ul id="confirmMaterialList" class="pixel-confirm-list"></ul>
     </div>
   </body>
 </html>

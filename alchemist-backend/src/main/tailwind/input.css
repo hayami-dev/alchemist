@@ -870,4 +870,252 @@ h1 {
     border-radius: 0 4px 4px 0;
     line-height: 1.4;
   }
+
+  /* -----------------------------------
+   * 1. ダイアログ本体（モーダル枠）
+   * ----------------------------------- */
+  .pixel-dialog-box {
+    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+    border: 4px solid #78350f;
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 90vw;
+    width: 360px;
+
+    /* ドット絵風の重厚な影 */
+    box-shadow:
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.9),
+      inset 0 -3px 0 0 #fde68a,
+      0 0 0 2px #d97706,
+      0 8px 0 4px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+  }
+
+  /* -----------------------------------
+   * 2. ポジティブボタン（決定・使う・はい）
+   * ----------------------------------- */
+  .pixel-btn-dialog-positive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: 0.5rem 1.25rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+
+    /* 鮮やかなオレンジ〜ゴールドグラデーション */
+    background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+    border: 2px solid #9a3412;
+
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
+      0 2px 0 0 var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    & > * {
+      text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
+    }
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
+        0 1px 0 0 var(--pixel-shadow);
+    }
+  }
+
+  /* -----------------------------------
+   * 3. ネガティブボタン（キャンセル・捨てる・いいえ）
+   * ----------------------------------- */
+  .pixel-btn-dialog-negative {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: 0.5rem 1.25rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #57534e;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+
+    /* 落ち着いたウォームグレーグラデーション */
+    background: linear-gradient(180deg, #e7e5e4 0%, #d6d3d1 100%);
+    border: 2px solid #78716c;
+
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+      0 2px 0 0 var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    &:hover {
+      filter: brightness(1.05);
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow:
+        inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+        0 1px 0 0 var(--pixel-shadow);
+    }
+  }
+
+  /* -----------------------------------
+   * ダイアログ用 共通テキスト & レイアウト
+   * ----------------------------------- */
+  .pixel-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .pixel-dialog-message {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #7c2d12;
+    line-height: 1.5;
+  }
+
+  /* -----------------------------------
+   * 共通パーツ1: 縦並びのメニューリスト（選択肢）
+   * ----------------------------------- */
+  .pixel-dialog-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* メニュー項目（選択ボタン） */
+  .pixel-dialog-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.65rem 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #451a03;
+    background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+    border: 2px solid #78350f;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 2px 0 0 var(--pixel-shadow);
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    &:hover {
+      filter: brightness(1.03);
+      background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%);
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+        0 1px 0 0 var(--pixel-shadow);
+    }
+  }
+
+  /* 危険系操作（「捨てる」など）のアクショントーン */
+  .pixel-dialog-menu-btn-danger {
+    color: #991b1b;
+    border-color: #991b1b;
+    background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+
+    &:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #fecaca 100%);
+    }
+  }
+
+  /* -----------------------------------
+   * 共通パーツ2: 横並びのアイコンピッカー（調合選択等）
+   * ----------------------------------- */
+  .pixel-dialog-icon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .pixel-dialog-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: #fffbeb;
+    border: 2px solid #b45309;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+      0 2px 0 0 var(--pixel-shadow);
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    &:hover {
+      filter: brightness(1.08);
+      background: #fef3c7;
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 0 var(--pixel-shadow);
+    }
+  }
+
+  /* -----------------------------------
+   * 共通パーツ3: 確認用素材リスト
+   * ----------------------------------- */
+  .pixel-confirm-list {
+    background: rgba(254, 243, 199, 0.6);
+    border: 2px dashed #b45309;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #78350f;
+
+    & li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(180, 83, 9, 0.2);
+      padding-bottom: 0.2rem;
+    }
+
+    & li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
 }

@@ -6,16 +6,28 @@
     <title>Document</title>
   </head>
   <body>
-    <div th:fragment="itemMenu">
+    <div th:fragment="itemMenu" class="pixel-dialog-content">
       <div
         th:replace="~{fragments/common/item-name :: itemName((targetItem=${item}))}"
       ></div>
-      <ul>
-        <li th:if="${isTool}" class="js-item-menu-button" data-action="use">
-          使う（未実装）
+      <ul class="pixel-dialog-menu-list">
+        <li th:if="${isTool}">
+          <button
+            type="button"
+            class="js-item-menu-button pixel-dialog-menu-btn"
+            data-action="use"
+          >
+            <span>使う</span>
+          </button>
         </li>
-        <li class="js-item-menu-button" data-action="discard">
-          捨てる（未実装）
+        <li>
+          <button
+            type="button"
+            class="js-item-menu-button pixel-dialog-menu-btn pixel-dialog-menu-btn-danger"
+            data-action="discard"
+          >
+            <span>捨てる</span>
+          </button>
         </li>
       </ul>
     </div>
