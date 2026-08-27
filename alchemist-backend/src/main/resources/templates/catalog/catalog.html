@@ -11,30 +11,30 @@
     <title>レシピ</title>
   </head>
   <body class="page-atelier">
-    <main layout:fragment="content">
+    <main layout:fragment="content" class="flex flex-col gap-8 items-center">
       <h1>レシピ</h1>
-      <div class="grid grid-cols-12 gap-4">
+      <div class="grid grid-cols-12 gap-12">
         <!-- アイテムカラム -->
         <div class="col-span-10">
-          <ul class="grid grid-cols-6 gap-2">
+          <ul class="grid grid-cols-6 gap-8">
             <th:block th:each="slot: ${slots}">
               <li
                 th:if="${slot.isCataloged}"
-                class="col-auto border border-amber-800"
+                class="pixel-btn-circle-orange-light col-autoborder-amber-800"
               >
-                [[${slot.item.name}]]
+                <span> [[${slot.item.name}]] </span>
               </li>
               <li
                 th:if="${!slot.isCataloged}"
-                class="col-auto border border-amber-800"
+                class="pixel-btn-circle-gray-disabled col-auto"
               >
-                ？？？
+                <span> ？ </span>
               </li>
             </th:block>
           </ul>
         </div>
         <!-- 達成率 -->
-        <div class="col-span-2">
+        <div class="col-span-2 pixel-rate-card h-fit">
           <p>達成率</p>
           <p>[[${completionRate}]]%</p>
         </div>

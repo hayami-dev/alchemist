@@ -533,4 +533,154 @@ h1 {
         0 1px 0 8px var(--pixel-shadow); /* 影を小さくして沈み込み表現 */
     }
   }
+
+  /* 淡いオレンジ調・シンプル丸型ピクセルボタン */
+  .pixel-btn-circle-orange-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 30%;
+
+    /* 中央背景：淡いアプリコット〜柔らかなピーチオレンジ */
+    background: radial-gradient(
+      circle at 50% 35%,
+      #ffedd5 0%,
+      #fed7aa 55%,
+      #fdba74 100%
+    );
+
+    /* 内側の境界線（やや落ち着いたアプリコット枠） */
+    border: 1px solid #f97316;
+
+    /* 重厚感を減らした、シンプルで薄い多重枠 */
+    box-shadow:
+      /* 内側のやわらかい白光沢 */
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+      /* 淡いオレンジ・ライトベージュのフレーム層 */ 0 0 0 2px #ffded0,
+      /* 内枠：ミルキーオレンジ */ 0 0 0 5px #fb923c,
+      /* メイン：マイルドオレンジ */ /* 最外側の黒40%枠線（変数使用） */ 0 0 0
+        6px var(--pixel-shadow),
+      /* 真下への落ち影（2pxの薄め指定） */ 0 2px 0 6px var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s;
+
+    /* テキスト・アイコンの設定（濃い茶系の文字で視認性を確保） */
+    & > * {
+      font-size: 12px;
+      text-align: center;
+      color: #7c2d12;
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+    }
+
+    /* ホバー時 */
+    &:hover {
+      filter: brightness(1.05);
+    }
+
+    /* クリック（押下）時 */
+    &:active {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+        0 0 0 2px #ffded0,
+        0 0 0 5px #fb923c,
+        0 0 0 6px var(--pixel-shadow),
+        0 0px 0 6px var(--pixel-shadow);
+    }
+  }
+
+  /* ほんのりオレンジ味のあるグレー・無効（Disabled）丸型ピクセルボタン */
+  .pixel-btn-circle-gray-disabled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    position: relative;
+
+    /* 無効化設定：クリックイベント無効・カーソル禁止表示 */
+    cursor: not-allowed;
+    pointer-events: none;
+    user-select: none;
+    border-radius: 30%;
+
+    /* 中央背景：わずかに温かみ（オレンジ味）のあるグレーグラデーション */
+    background: radial-gradient(
+      circle at 50% 35%,
+      #e7e5e4 0%,
+      #d6d3d1 55%,
+      #a8a29e 100%
+    );
+
+    /* 内側の境界線（彩度を落としたウォームグレー枠） */
+    border: 1px solid #78716c;
+
+    /* グレー基調のフレーム層（落ち影を消してフラット化） */
+    box-shadow:
+      /* 内側のひかえめな白光沢 */
+      inset 0 3px 0 0 rgba(255, 255, 255, 0.4),
+      /* ウォームグレーの多重フレーム層 */ 0 0 0 2px #f5f5f4,
+      /* 内枠：ライトグレー */ 0 0 0 5px #a8a29e,
+      /* メイン：ミディアムグレー */
+        /* 最外側の黒20%枠線（押せない感の演出のため影を透過・抑えめに） */ 0 0
+        0 6px rgba(0, 0, 0, 0.2);
+
+    image-rendering: pixelated;
+
+    /* テキスト・アイコンの設定（褪せた色合いにして無効感を強調） */
+    & > * {
+      font-size: 12px;
+      text-align: center;
+      color: #78716c;
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.6);
+      opacity: 0.8;
+    }
+  }
+
+  /* 達成率用：温かみのあるレトロカード風枠 */
+  .pixel-rate-card {
+    border-radius: 12px; /* 指定の角丸12px */
+    background: linear-gradient(
+      180deg,
+      #fffbeb 0%,
+      #fef3c7 100%
+    ); /* やわらかいクリームグラデーション */
+    border: 3px solid #78350f; /* 深みのあるブラウン枠 */
+    padding: 0.75rem 1rem;
+    text-align: center;
+    position: relative;
+
+    /* ドット絵風の内外立体影 */
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+      /* 内側上部のハイライト */ inset 0 -2px 0 0 #fde68a,
+      /* 内側底面の薄影 */ 0 0 0 2px #d97706,
+      /* 外側のライトブラウン縁 */ 0 3px 0 2px var(--pixel-shadow); /* 真下への落ち影 */
+
+    /* ラベル（「達成率」テキスト） */
+    & p:first-child {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #92400e;
+      margin-bottom: 0.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* 数値（「100%」テキスト） */
+    & p:last-child {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #7c2d12;
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+      font-family: monospace, sans-serif; /* 数字を際立たせる等幅フォント */
+    }
+  }
 }
