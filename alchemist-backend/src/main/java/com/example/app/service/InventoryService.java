@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.app.domain.InventoryItem;
 import com.example.app.domain.Item;
+import com.example.app.mapper.CatalogMapper;
 import com.example.app.mapper.InventoryMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class InventoryService {
 
   private final InventoryMapper inventoryMapper;
+  /* TODO:設計書の修正 */
+  private final CatalogMapper catalogMapper;
 
   // インベントリの全アイテムを取得する。
   public List<InventoryItem> getInventoryItems(Long playerId) {
@@ -41,6 +44,7 @@ public class InventoryService {
       inventoryMapper.updateQuantity(playerId, itemId, existing.getQuantity() + qty);
     } else {
       inventoryMapper.insertInventoryItem(playerId, itemId, qty);
+      catalogMapper.insertCatalog(playerId, itemId); // 新規追加の時だけ、カタログにも登録
     }
   }
 
