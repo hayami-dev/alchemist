@@ -8,7 +8,9 @@ package com.example.app.service;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,7 @@ public class AlchemyService {
   private final ItemMapper itemMapper;
   // 手持ちアイテム一覧を表示させる用
   private final InventoryMapper inventoryMapper;
+  private final InventoryService inventoryService;
   // 調合の計算に関するサービス
   private final AlchemyCalculationService alchemyCalculationService;
   // 調合のバリデーションに関するサービス
@@ -56,8 +59,6 @@ public class AlchemyService {
     List<Long> materialIds = request.getMaterialIds();
     List<CalculationType> calcTypes = request.getCalcTypes();
 
-    // TODO:Recipeへrequestを詰め込む
-
     // 渡された素材、調合方法のバリデーションを実行
     alchemyValidationService.validateCraftItem(materialIds, calcTypes, playerId);
 
@@ -71,6 +72,10 @@ public class AlchemyService {
     if (!alchemyValidationService.isDifferentResult(resultItem.getId(), materialIds)) {
       throw new InvalidCraftException("素材と同じアイテムが調合結果になりました");
     }
+
+    // 素材を消費し、完成品をインベントリへ追加する
+    consumeUsedMaterials(playerId, materialIds);
+    addItem(playerId, resultItem.getId(), 1);
 
     return resultItem;
   }
@@ -95,7 +100,6 @@ public class AlchemyService {
       Item item = inv.getItem();
       if (item instanceof ToolItem toolItem) {
         CalculationType unlocked = toolItem.getToolEffectType().toUnlockedCalculationType();
-        System.out.println("unlocked" + unlocked);
         if (unlocked != null) {
           available.add(unlocked);
         }
@@ -107,7 +111,6 @@ public class AlchemyService {
 
   // resultItemValueの値によって返すitemIdを計算する
   public Item getResultItem(int resultItemValue) {
-    // resultItemValueが特殊な値だった場合の処理
     if (resultItemValue > MAX_VALID_VALUE) {
       return itemMapper.findById(BURNT_ITEM_ID);
     }
@@ -118,25 +121,24 @@ public class AlchemyService {
       return itemMapper.findById(ONE_RESULT_ITEM_ID);
     }
 
-    // 2～100の通常処理
-    // DBのcraft_resultsテーブルから渡した値に対応するitemIdを取得する
-    // TODO:例外処理（対応するアイテムがあるかどうか）
     Long itemId = alchemyMapper.getCraftItemId(resultItemValue);
-
-    // Itemクラスを1件返す
     return itemMapper.findById(itemId);
   }
 
   // InventoryService.addItem を呼び出し、調合によって完成したアイテムを
   // プレイヤーのインベントリ（カバン）に追加する。
   public void addItem(Long playerId, Long itemId, int qty) {
-
+    inventoryService.addItem(playerId, itemId, qty);
   }
 
   // InventoryService.consumeItemを呼び出し、
-  // 調合の素材にしたアイテムをインベントリから削除（update）する。
-  public void consumeUsedMaterials(Long playerId, Long recipeId) {
+  // 調合の素材にしたアイテムをインベントリから消費（削除・update）する。
+  // 同じ素材が複数スロットで選ばれていた場合、まとめて数量分を消費する。
+  public void consumeUsedMaterials(Long playerId, List<Long> materialIds) {
+    Map<Long, Long> counts = materialIds.stream()
+        .collect(Collectors.groupingBy(id -> id, Collectors.counting()));
 
+    counts.forEach((itemId, count) -> inventoryService.consumeItem(playerId, itemId, count.intValue()));
   }
 
 }
