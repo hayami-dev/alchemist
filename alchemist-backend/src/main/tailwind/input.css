@@ -683,4 +683,191 @@ h1 {
       font-family: monospace, sans-serif; /* 数字を際立たせる等幅フォント */
     }
   }
+
+  /* -----------------------------------
+   * ドット絵風 タブボタン（デザイン用クラス）
+   * ----------------------------------- */
+  .pixel-tab-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    user-select: none;
+
+    /* 上部のみ丸めたタブ形状 */
+    border-radius: 12px 12px 0 0;
+
+    /* 【未選択（デフォルト）】暗めの落ち着いたウォームグレー */
+    background: linear-gradient(180deg, #d6d3d1 0%, #a8a29e 100%);
+    color: #57534e;
+    border: 3px solid #78716c;
+    border-bottom: none; /* パネルと自然に繋げるため下線は消す */
+
+    /* 内側の影で少し凹んだ印象に */
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.4),
+      inset 0 -2px 0 0 #78716c,
+      0 -2px 0 0 var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.1s,
+      filter 0.1s,
+      background 0.1s;
+  }
+
+  /* 未選択タブ ホバー時 */
+  .pixel-tab-button:hover {
+    filter: brightness(1.08);
+  }
+
+  /* 【選択中（アクティブ）】明るく浮き出るメインカラー */
+  .pixel-tab-button.is-active,
+  .pixel-tab-button.active {
+    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+    color: #7c2d12;
+    border-color: #78350f;
+
+    /* 1px 上に浮き出させて「前に出ている感」を強調 */
+    transform: translateY(-2px);
+
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.9),
+      0 -3px 0 0 var(--pixel-shadow);
+  }
+
+  /* -----------------------------------
+   * ドット絵風 コンテンツパネル
+   * ----------------------------------- */
+  .pixel-tab-panel {
+    background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+    border: 3px solid #78350f;
+    border-radius: 0 12px 12px 12px;
+    padding: 1.5rem;
+    margin-top: -3px; /* タブ枠線との重ね合わせ */
+
+    box-shadow:
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.8),
+      inset 0 -2px 0 0 #fde68a,
+      0 4px 0 2px var(--pixel-shadow);
+  }
+
+  /* パネル内見出し */
+  .pixel-tab-panel h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #7c2d12;
+    border-bottom: 2px dashed #b45309;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* -----------------------------------
+   * 1. アイテムリスト 1行枠 (itemList)
+   * ----------------------------------- */
+  .pixel-item-list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+
+    /* 木枠・紙風のやわらかいクリーム〜ベージュグラデーション */
+    background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+    border: 2px solid #78350f;
+
+    /* ピクセル風の立体感影 */
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 0 #fde68a,
+      0 2px 0 0 var(--pixel-shadow);
+
+    image-rendering: pixelated;
+    transition:
+      transform 0.05s,
+      filter 0.05s,
+      background-color 0.1s;
+  }
+
+  /* ホバー時（少し明るく） */
+  .pixel-item-list-row:hover {
+    filter: brightness(1.03);
+    background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%);
+  }
+
+  /* クリック押下時（少し沈み込む） */
+  .pixel-item-list-row:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 1px 0 0 var(--pixel-shadow);
+  }
+
+  /* 右側の価格・所持数テキスト */
+  .pixel-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #7c2d12;
+    font-family: monospace, sans-serif; /* 数字を際立たせる等幅 */
+  }
+
+  /* -----------------------------------
+   * 2. アイテム詳細・名前 (itemName)
+   * ----------------------------------- */
+  .pixel-item-name-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  /* アイコン＋名前のヘッダー部分 */
+  .pixel-item-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* ドット絵アイコン用枠線 */
+  .pixel-item-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    background: #fef3c7;
+    border: 2px solid #b45309;
+    border-radius: 4px;
+    padding: 2px;
+  }
+
+  /* アイテム名 */
+  .pixel-item-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #451a03;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+  }
+
+  /* 説明文エリア（hidden解除時に表示される用） */
+  .pixel-item-desc {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    color: #78350f;
+    background: rgba(254, 243, 199, 0.5);
+    border-left: 3px solid #b45309;
+    border-radius: 0 4px 4px 0;
+    line-height: 1.4;
+  }
 }

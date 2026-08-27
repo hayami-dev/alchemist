@@ -8,13 +8,13 @@
   <body>
     <div
       th:fragment="itemList(itemData,quantity,price)"
-      class="js-item-list-button flex gap-4 border-1 border-amber-800"
+      class="js-item-list-button pixel-item-list-row"
       th:data-item-id="${itemData.item.id}"
     >
       <div
         th:replace="~{fragments/common/item-name :: itemName(${itemData})}"
       ></div>
-      <div class="flex gap-4" th:if="${price != null or quantity != null}">
+      <div class="pixel-item-meta" th:if="${price != null or quantity != null}">
         <p th:if="${price != null}">[[${price}]] G</p>
         <p th:if="${quantity != null}">×[[${quantity}]]</p>
       </div>
