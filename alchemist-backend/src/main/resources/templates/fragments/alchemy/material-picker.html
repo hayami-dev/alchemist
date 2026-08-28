@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>マテリアルアイテムピッカー</title>
+  </head>
+  <body>
+    <div th:fragment="materialPicker" class="pixel-dialog-content">
+      <ul class="pixel-dialog-menu-list">
+        <th:block th:each="inventoryItem : ${items}">
+          <li>
+            <button
+              type="button"
+              class="js-material-picker-item pixel-dialog-menu-btn"
+              th:data-item-id="${inventoryItem.item.id}"
+              th:data-item-name="${inventoryItem.item.name}"
+            >
+              <span th:text="${inventoryItem.item.name}"></span>
+              <span
+                class="font-mono text-amber-800"
+                th:text="'×' + ${inventoryItem.quantity}"
+              ></span>
+            </button>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+  </body>
+</html>

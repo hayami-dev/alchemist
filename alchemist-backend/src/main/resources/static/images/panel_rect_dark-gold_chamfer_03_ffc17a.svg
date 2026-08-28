@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><defs>
+    <linearGradient id="bd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8A048"/>
+      <stop offset="50%" stop-color="#907020"/>
+      <stop offset="100%" stop-color="#504000"/>
+    </linearGradient>
+  <filter id="tint" color-interpolation-filters="sRGB"><feFlood flood-color="#ffc17a" result="flood"/><feBlend mode="multiply" in="SourceGraphic" in2="flood" result="blend"/><feComposite in="blend" in2="SourceGraphic" operator="in"/></filter></defs><g filter="url(#tint)">
+  
+  <!-- Border (gradient chamfer) -->
+  <path d="M17,1 H239 L255,17 V239 L239,255 H17 L1,239 V17 Z" fill="url(#bd)"/>
+  <!-- Highlight band -->
+  <path d="M17,4 H239 L252,17 V239 L239,252 H17 L4,239 V17 Z" fill="#B09038"/>
+  <!-- Inner line (dark accent) -->
+  <path d="M17,6 H239 L250,17 V239 L239,250 H17 L6,239 V17 Z" fill="#3A2200"/>
+  <!-- Body (flat solid chamfer) -->
+  <path d="M17,8 H239 L248,17 V239 L239,248 H17 L8,239 V17 Z" fill="#2A2A30"/>
+</g></svg>

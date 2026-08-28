@@ -1,32 +1,32 @@
 {
   "name": "Java 21 & MySQL Environment",
-  "image": "mcr.microsoft.com/devcontainers/java:21-bookworm",
-  // ここで拡張機能（プラグイン）をコンテナ内に自動インストール
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/alchemist",
+  "shutdownAction": "stopCompose",
   "customizations": {
     "vscode": {
       "extensions": [
         "vscjava.vscode-java-pack",
         "vscjava.vscode-spring-boot-dashboard",
         "vmware.vscode-spring-boot-tools",
-        "vscjava.vscode-lombok"
+        "vscjava.vscode-lombok",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   },
-  // Javaの隣でMySQLを同時に走らせる設定
-  "containerEnv": {
-    "DB_HOST": "127.0.0.1"
-  },
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/java:1": {
       "version": "none",
       "installMaven": "true",
       "installGradle": "false"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
     }
   },
   "forwardPorts": [
-    3306
-  ], // WindowsからMySQLに繋ぐためのポート
-  // コンテナ起動時に裏でMySQLを走らせる設定
-  "initializeCommand": "docker run -d --name alchemist-mysql-dev -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root_password -e MYSQL_DATABASE=alchemist_db -e MYSQL_USER=game_user -e MYSQL_PASSWORD=game_password mysql:8.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci || docker start alchemist-mysql-dev"
+    3306,
+    8080
+  ]
 }

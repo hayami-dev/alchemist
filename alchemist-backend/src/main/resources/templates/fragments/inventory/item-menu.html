@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div th:fragment="itemMenu" class="pixel-dialog-content">
+      <div
+        th:replace="~{fragments/common/item-name :: itemName((targetItem=${item}))}"
+      ></div>
+      <ul class="pixel-dialog-menu-list">
+        <li th:if="${isTool}">
+          <button
+            type="button"
+            class="js-item-menu-button pixel-dialog-menu-btn"
+            data-action="use"
+          >
+            <span>使う</span>
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="js-item-menu-button pixel-dialog-menu-btn pixel-dialog-menu-btn-danger"
+            data-action="discard"
+          >
+            <span>捨てる</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

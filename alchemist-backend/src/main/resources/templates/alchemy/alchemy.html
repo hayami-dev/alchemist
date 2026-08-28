@@ -1,0 +1,54 @@
+<!doctype html>
+<html
+  lang="ja"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/base}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>調合台</title>
+  </head>
+
+  <body class="page-alchemy">
+    <main layout:fragment="content">
+      <section class="flex flex-col gap-8 items-center">
+        <h1 class="text-2xl font-bold">調合</h1>
+        <p>素材を2つ以上選んでください。</p>
+        <form class="flex flex-col gap-12 items-center">
+          <div class="flex gap-8 items-center p-6 justify-between">
+            <div
+              th:replace="~{fragments/alchemy/material-slot :: materialSlot(1)}"
+            ></div>
+            <div
+              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(1, ${defaultCalcType}, ${allCalcTypes})}"
+            ></div>
+            <div
+              th:replace="~{fragments/alchemy/material-slot :: materialSlot(2)}"
+            ></div>
+            <div
+              th:replace="~{fragments/alchemy/calc-slot :: calcSlot(2, ${defaultCalcType}, ${allCalcTypes})}"
+            ></div>
+            <div class="relative">
+              <div
+                th:replace="~{fragments/alchemy/material-slot :: materialSlot(3)}"
+              ></div>
+              <button
+                type="button"
+                id="js-clear-materials-button"
+                class="pixel-btn-close absolute top-[-15%] right-[-15%] z-[99]"
+              >
+                <span class="pixel-icon-x"></span>
+              </button>
+            </div>
+          </div>
+          <button
+            th:replace="~{fragments/common/primary-button :: primaryButton('submit', '調合する', 'js-craft-button')}"
+          ></button>
+        </form>
+      </section>
+      <script type="module" th:src="@{/js/alchemy/alchemy.js}"></script>
+    </main>
+  </body>
+</html>
