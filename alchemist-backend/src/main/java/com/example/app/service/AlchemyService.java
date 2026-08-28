@@ -70,7 +70,7 @@ public class AlchemyService {
 
     // 返ってきたItemクラスが意味のある結果かバリデーションを実行
     if (!alchemyValidationService.isDifferentResult(resultItem.getId(), materialIds)) {
-      throw new InvalidCraftException("素材と同じアイテムが調合結果になりました");
+      throw new InvalidCraftException("素材と同じアイテムが\n調合結果になりました・・・");
     }
 
     // 素材を消費し、完成品をインベントリへ追加する

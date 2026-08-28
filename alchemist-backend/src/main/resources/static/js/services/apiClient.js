@@ -2,14 +2,15 @@ export const apiClient = {
   async post(url, data) {
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
     if (!response.ok) {
-      throw new Error(`APIエラー: ${response.status} (${url})`);
+      const errorBody = await response.json().catch(() => null);
+      const message =
+        errorBody?.message || `APIエラー: ${response.status} (${url})`;
+      throw new Error(message);
     }
 
     return response.json();
@@ -19,7 +20,10 @@ export const apiClient = {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`APIエラー: ${response.status} (${url})`);
+      const errorBody = await response.json().catch(() => null);
+      const message =
+        errorBody?.message || `APIエラー: ${response.status} (${url})`;
+      throw new Error(message);
     }
 
     return response.json();
