@@ -52,6 +52,28 @@ export const DialogService = {
       window.onDialogContentLoaded();
     }
   },
+
+  /* TODO:設計書反映 */
+  // サーバー通信を挟まず、メッセージだけを即座にダイアログ表示する
+  showMessage(message) {
+    document.getElementById("dialogContent").innerHTML =
+      `<p class="pixel-dialog-message whitespace-pre-line">${message}</p>`;
+    document.getElementById("dialogShell").classList.remove("hidden");
+    document.getElementById("dialogShell").classList.add("flex");
+
+    // ポジティブボタンは不要なので隠す
+    const positiveButton = document.getElementById("dialogPositiveButton");
+    if (positiveButton) {
+      positiveButton.style.display = "none";
+    }
+
+    // ネガティブボタンを「閉じる」として使う
+    const negativeButton = document.getElementById("dialogNegativeButton");
+    if (negativeButton) {
+      negativeButton.textContent = "閉じる";
+    }
+  },
+
   close() {
     document.getElementById("dialogShell").classList.add("hidden");
     document.getElementById("dialogShell").classList.remove("flex");

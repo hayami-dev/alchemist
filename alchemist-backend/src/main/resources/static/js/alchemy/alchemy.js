@@ -85,8 +85,7 @@ if (craftButton) {
           window.location.href = "/alchemy/complete";
         } catch (error) {
           console.error(error);
-          // TODO: きちんとしたUIの作成
-          alert("調合に失敗しました");
+          DialogService.showMessage(error.message || "調合に失敗しました");
         }
       },
     });

@@ -6,16 +6,20 @@
 package com.example.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.app.controller.dto.CraftRequest;
 import com.example.app.domain.Item;
 import com.example.app.domain.enums.CalculationType;
+import com.example.app.exception.InvalidCraftException;
 import com.example.app.service.AlchemyService;
 
 import jakarta.servlet.http.HttpSession;
@@ -86,5 +90,14 @@ public class AlchemyController {
   @GetMapping("/confirm-modal")
   public String confirmModal() {
     return "fragments/alchemy/confirm-modal :: confirmModal";
+  }
+
+  /* TODO:設計書反映 */
+  // InvalidCraftExceptionが投げられた時、メッセージ付きでフロントへ返す
+  @ExceptionHandler(InvalidCraftException.class)
+  public ResponseEntity<Map<String, String>> handleInvalidCraftException(InvalidCraftException e) {
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST) // 400
+        .body(Map.of("message", e.getMessage()));
   }
 }
